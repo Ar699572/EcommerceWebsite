@@ -1,0 +1,258 @@
+<section class="">
+    <div class="container-fluid p-5">
+        
+        <div class="row">
+            <div class="col-lg-2 order-lg-1 order-2">
+                <!-- <div class="col-xl-3 col-md-3 sidebar"> -->
+                    <div class="block product-price-range"style="margin-top:-18px;">
+                        <div class="sidebar-bar-title">
+                            <h3>Price</h3>
+                            
+                        </div>
+                        <div class="block-content">
+                            <div class="content">
+                                 
+                                    <div class="slider-container">
+                                        <input type="range" min="0" max="5000" step="10" value={{MinValue}}>
+                                        <input type="range"  min="0" max="5000" step="10" value={{MaxValue}}>
+                                        <span class="amount-range-price mt-5"></span>
+                                      </div>
+                              </div>
+                             
+                              
+                            <div class="slider-range">
+                                <div class="slider-price" id="display1">
+                                    
+                                    <ul class="check-box-list"style="padding:20px 2px;">
+                                        <li>
+                                            <input type="checkbox" id="p1" checked  name="p1"(change)="addrange($event.target,min1,max1,1)">
+                                            <label for="p1"><span class="button"></span> {{0 | currency:storeSettings.currency}} - {{1000 | currency:storeSettings.currency}} <span class="count"></span></label>
+                                        </li>
+                                        <li>
+                                            <input type="checkbox" id="p2"  checked name="p2" (change)="addrange($event.target,min2,max2,2)">
+                                            <label for="p1"><span class="button"></span> {{1001 | currency:storeSettings.currency}} - {{2000 | currency:storeSettings.currency}} <span class="count"></span></label>
+                                        </li>
+                                        <li>
+                                            <input type="checkbox" id="p3"  checked name="p3" (change)="addrange($event.target,min3,max3,3)">
+                                            <label for="p1"><span class="button"></span>{{2001 | currency:storeSettings.currency}} - {{3000 | currency:storeSettings.currency}} <span class="count"></span></label>
+                                        </li>
+                                         <li>
+                                            <input type="checkbox" id="p4" checked name="p4" (change)="addrange($event.target,min4,max4,4)">
+                                            <label for="p1"><span class="button"></span> {{3001 | currency:storeSettings.currency}} - {{4000 | currency:storeSettings.currency}} <span class="count"></span></label>
+                                        </li>
+    
+                                        <li>
+                                            <input type="checkbox" id="p5" checked  name="p5" (change)="addrange($event.target,min5,max5,5)">
+                                            <label for="p1"><span class="button"></span>{{4001 | currency:storeSettings.currency}} - {{5000 | currency:storeSettings.currency}} <span class="count"></span></label>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+    
+                        <br>
+    
+                        <div class="block-product-price-range"style="padding-right:0px;padding-left:0px;margin-top:-18px;">
+                            <div class="sidebar-bar-title">
+                                <h3>Main Categories</h3>
+                            </div>
+                            <div class="block-content">
+                                <div class="slider-range">
+                                    <div class="slider-price">
+                                        <ul class="check-box-list" >
+                                            <li *ngFor="let d of lstofResultMainCategories;let i=index">
+                                                <input type="checkbox" id={{d.MnCategoryname}}  [attr.checked]="d.show==true?'checked':'unchecked'" name={{d.MnCategoryname}} value={{d.MnCategoryID}} (change)="MainCategoryChange($event.target,d,i)">
+                                                <label  for={{d.MnCategoryname}}><span class="button"></span> {{d.MnCategoryname}}</label>
+                                            </li>
+                                            
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+    
+                        <br>
+                        <div class="block-product-price-range"style="padding-right:0px;padding-left:0px;margin-top:-18px;">
+                            <div class="sidebar-bar-title">
+                                <h3>Categories</h3>
+                            </div>
+                            <div class="block-content">
+                                <div class="slider-range">
+                                    <div class="slider-price">
+                                        <ul class="check-box-list" >
+                                           
+                                            <li *ngFor="let d of lstResultCategories">
+                                                <input type="checkbox" id={{d.Categoryname}}   [attr.checked]="d.show==true?'checked':'unchecked'" name={{d.Categoryname}} value={{d.CategoryID}} (change)="CategoriesChange($event.target,d)">
+                                                <label  for={{d.Categoryname}}><span class="button"></span> {{d.Categoryname}}</label>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+    
+                        <br>
+                        <div class="block-product-price-range"style="padding-right:0px;padding-left:0px;margin-top:-18px;">
+                            <div class="sidebar-bar-title">
+                                <h3>Brands</h3>
+                            </div>
+                            <div class="block-content">
+                                <div class="slider-range">
+                                    <div class="slider-price">
+                                        <ul class="check-box-list" >
+                                            <li *ngFor="let d of lstResultBrands">
+                                                <input type="checkbox"  checked id={{d.BrandName}} name={{d.BrandName}} value={{d.BrandID}}  (change)="BrandChange($event.target,d)">
+                                                <label  for={{d.BrandName}}><span class="button"></span> {{d.BrandName}}</label>
+                                            </li>
+                                            
+                                            
+                                            
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                       
+                        <div class="block-product-price-range"style="padding-right:0px;padding-left:0px;margin-top:-18px;"  *ngFor="let d of lstResultOptionGroups| UniqueOptionGroups">
+                            <div class="sidebar-bar-title">
+                                <h3>{{d.OptionGroup}}</h3>
+                            </div>
+                            <div class="block-content">
+                                <div class="slider-range">
+                                    <div class="slider-price">
+                                        <ul class="check-box-list"   *ngFor="let dChild of lstResultOptions| UniqueOptions">
+                                            <li  *ngIf="dChild.OptionGroupID==d.OptionGroupID">
+                                                <input type="checkbox" id={{dChild.OptionName}} checked name={{dChild.OptionName}}  
+                                                 value={{dChild.OptionID}} (change)="OptionsChange($event.target,dChild,d.OptionGroupID)">
+                                                <label for={{dChild.OptionName}}><span class="button"></span> {{dChild.OptionName}} </label>
+                                            </li>
+                                            
+                                            
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                        </div>
+    
+                       
+    
+    
+                    </div>
+                <!-- </div> -->
+
+
+
+            </div>
+            <div class="col-lg-10 order-lg-2 order-1">
+
+                <!-- <div class="col-xl-9 col-lg-9"> -->
+                
+                    <div class="shop__product--wrapper mt-19">
+                        <div class="tab_content">
+                            <div class="row name">
+                                <div class="col-md-7 col-4">
+                            <div _ngcontent-rqg-c2="" class="page-title">
+                            <h3  style="margin-top:8px;">Products</h3>
+                            </div>
+                        </div>
+                        <div class="col-md-5 col-8">
+                           
+                            <div class="toolbar">
+                                <div class="sorter">
+                                    <div class="short-by">
+                                        <label>Sort By: </label>
+                                                                 
+                                        <select (change)="SortChange($event.target)">
+                                            <option selected="selected">Default 
+                                            </option><option>Price Low to High 
+                                            </option><option>Price High to Low  
+                                            </option><option>Name (A-Z) 
+                                            </option><option>Name (Z-A) 
+                                          
+                                          </option></select>
+                                    </div>  
+                                </div>
+                            </div>
+                        </div>
+                             </div>
+                            <div id="product_grid" class="tab_pane active show">
+                               
+                                <div class="product__section--inner product__grid--inner">
+                                  
+                                    <!-- row row-cols-xl-5 row-cols-lg-4 row-cols-md-3 row-cols-2 mb--n30 -->
+                                    <div class=" row  row-cols-xl-5 row-cols-lg-12 row-col-md-12 mb-5" >
+                                     
+                                      
+                                        <div class="col-md-12 text-center" *ngIf="lstFilteredProducts.length==0" >
+                                            <h1 style="font-size: clamp(19px, 2.5vw, 45px);color: #f21330;">PRODUCTS WILL COMING SOON !</h1>
+                                          </div>
+                    
+                                        <div class="col-6 col-md-3  mb-30" style="display:table-cell;" (mouseover)="hover=true;productMouseOverCall(d.ProductID)"
+                                        (mouseleave)="hover=false"  *ngFor="let d of lstFilteredProducts">
+                                       <div class="product__items user-profile" >
+                                           <div class="product__items--thumbnail figure">
+                                               <a class="product__items--link" (click)="ProductClick(d.ProductOptionID,d.ProductID,d.Image1,d.OPName2,d.OPName3)">
+                                                   <img class="product__items--img product__primary--img" onerror="this.onerror=null;this.src='./assets/img/other/noimagepreview.png'"  src={{ImagePath}}{{d.Image1}} alt="product-img">
+                                                   <img class="product__items--img product__secondary--img" onerror="this.onerror=null;this.src='./assets/img/other/noimagepreview.png'"  src={{ImagePath}}{{d.Image1}} alt="product-img">
+                                               </a>
+                                           </div>
+                                           <div class="css-popover bg__black d-none d-lg-block" [style.z-index]="hover==true  ? 9 : 0">
+                                               <div class="row">
+                                                   <!-- <div class="col-md-12 mb-4">
+                                                       <p class="product-desc text-white">{{d.ProductShortDesc==''?d.ProductName:d.ProductShortDesc }}</p>
+                                                   </div> -->
+                                                   <!-- <div class="col-md-12">
+                                                       <strong class="text-white">Online Size :</strong>
+                                                   </div> -->
+                                                   <span *ngFor="let o of selectedProductOptions">
+                                                       <!-- <div class="col-md-5">
+                                                           <strong class="text-white">{{o.Name}}</strong>
+                                                       </div> -->
+                                                       <div class="col-md-12">
+                                                           <ul class="text-white">
+                                                               <li><strong class="text-white">{{o.Name}} :</strong>{{o.Options}}</li>
+                                                               
+                                                           </ul>
+                                                       </div>
+                                                   </span>
+                                                   <div class="col-md-12 mt-4">
+                                                       <h4 class="text-white"><a (click)="ProductClick(d.ProductOptionID,d.ProductID,d.ProductImage,d.OPName2,d.OPName3)">QUICK VIEW</a></h4>
+                                                   </div>
+                                               </div>
+                                           </div>
+                                           <div class="product__items--content text-center p-0">
+                                               <strong class="text-muted" (click)="ProductClick(d.ProductOptionID,d.ProductID,d.ProductImage,d.OPName2,d.OPName3)">{{d.ProductName}}</strong>
+                                               <!-- <h3 class="product__items--content__title h4"><a (click)="ProductClick(d.ProductOptionID,d.ProductID,d.ProductImage,d.OPName2,d.OPName3)">{{d.ProductName}}</a></h3> -->
+                                               <div class="product__items--price mb-5">
+                                                   <span class="current__price" *ngIf="d.SalesPrice!=''">{{d.SalesPrice | currency:storeSettings.currency}}</span>
+                                                   <span class="price__divided" *ngIf="d.Price!='' && ((+d.SalesPrice)<(+d.Price))"></span>
+                                                   <span class="old__price" *ngIf="d.Price!='' && ((+d.SalesPrice)<(+d.Price))">{{d.Price | currency:storeSettings.currency}}</span>
+                                               </div>
+                                           </div>
+                                       </div>
+                                   </div>
+                                    
+    
+                                        
+    
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                         
+                        </div>
+                        
+                    </div>
+                <!-- </div> -->
+
+            </div>
+           
+            
+          
+        
+            
+        </div>
+    </div>
+</section>

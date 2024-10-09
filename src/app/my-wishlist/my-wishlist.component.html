@@ -1,0 +1,79 @@
+<section class="cart__section section--padding">
+    <div class="container-fluid">
+        <div class="cart__section--inner">
+
+<form  novalidate="" action="#" class="ng-untouched ng-pristine ng-valid">
+    <h2  class="cart__title mb-40">My Wishlist</h2>
+    <div  class="row">
+        <div  class="col-lg-8 mx-auto">
+       
+            <div  class="cart__table" [hidden]="hideTable" >
+                <table  class="cart__table--inner">
+                    <thead  class="cart__table--header">
+                        <tr  class="cart__table--header__items">
+                            <th  class="cart__table--header__list">Product</th>
+                            <th  class="cart__table--header__list">Price</th>
+                            <th  class="cart__table--header__list">Stock Status</th>
+                            <th  class="cart__table--header__list"></th>
+                        </tr>
+                    </thead>
+                    <tbody  class="cart__table--body">
+                        <tr  class="cart__table--body__items" *ngFor="let d of MyWishlistProduct;let ind=index">
+                            <td  class="cart__table--body__list">
+                                <div  class="cart__product d-flex align-items-center">
+                                    <button  (click)="RemoveFromWishlist(d,ind)" class="cart__remove--btn" aria-label="search button" type="button">
+                                        <svg fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16px" height="16px"><path d="M 4.7070312 3.2929688 L 3.2929688 4.7070312 L 10.585938 12 L 3.2929688 19.292969 L 4.7070312 20.707031 L 12 13.414062 L 19.292969 20.707031 L 20.707031 19.292969 L 13.414062 12 L 20.707031 4.7070312 L 19.292969 3.2929688 L 12 10.585938 L 4.7070312 3.2929688 z"></path></svg>
+                                    </button>
+                                    <div class="cart__thumbnail">
+                                        <a href="#"><img class="border-radius-5" src={{ImageAppUrl+d.Image1}} alt="cart-product"></a>
+                                    </div>
+                                    <div class="cart__content">
+                                        <h4 class="cart__content--title"><a >{{d.ProductName}}</a></h4>
+                                        <span class="color__variant" *ngIf="d.OPGName1!=''"><b>{{d.OPGName1}}: </b> {{d.OPName1}} </span>
+                                        <span class="color__variant"  *ngIf="d.OPGName2!=''"><b>,{{d.OPGName2}}: </b> {{d.OPName2}} </span>
+                                        <span class="color__variant"  *ngIf="d.OPGName3!=''"><b>,{{d.OPGName3}}: </b> {{d.OPName3}} </span>
+                                        <span class="color__variant"  *ngIf="d.OPGName4!=''"><b>,{{d.OPGName4}}: </b> {{d.OPName4}} </span>
+                                      
+                                    </div>
+                                </div>
+                            </td>
+                            <td  class="cart__table--body__list"><span 
+                                    class="cart__price">{{d.SalesPrice | currency:'INR'}}</span></td>
+                            <td  class="cart__table--body__list" *ngIf="d.Available=='In stock'" ><button type="submit" class="variant__buy--now__btn primary__btn" (click)="AddtoCartClick(d)"><a >Add to cart</a></button></td>
+                            <td  class="cart__table--body__list" *ngIf="d.Available=='out of stock'" ><span   style="font-size: 18px;color: red;">Out of Stock</span></td>
+                    
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="empty-wishlist" [hidden]="hideTable==false" >
+                <img src="./assets/img/other/emptywishlist.png" alt="Empty Wishlist">
+                <p>Your wishlist is empty. Start adding items you'd like to save for later!</p>
+                <a (click)="BrowseProduct()" class="btn">Browse Products</a>
+              </div>
+        </div>
+    </div>
+    <div  id="myModal" role="dialog"  class="modal fade in"
+        style="z-index: 999 !important; display: none !important;">
+        <div  class="modal-dialog" style="width: 388px;">
+            <div  class="modal-content">
+                <div  class="modal-header"><button  type="button"
+                        data-dismiss="modal" class="close">×</button></div>
+                <div  class="modal-body">
+                    <h4  class="modal-title"
+                        style="width: 100%; text-align: center; font-size: 27px;"><i 
+                            class="fa fa-close"
+                            style="background: #f21330; color: white; padding: 7px 10px 7px 9px; border-radius: 50%; font-size: 20px; margin: 5px;"
+                            aria-hidden="true"></i> </h4>
+                    <p  style="text-align: center;"></p>
+                </div>
+                <div  class="modal-footer"><button  type="button"
+                        data-dismiss="modal" class="btn btn-default" style="float: right;">Close</button></div>
+            </div>
+        </div>
+    </div>
+</form>
+        </div>
+    </div>
+</section>

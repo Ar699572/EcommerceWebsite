@@ -1,0 +1,103 @@
+.container1 {
+    width: 500px;
+  height: 250px;
+  margin: 50px;
+  outline: solid 1px black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.centered-element {
+    width: 150px;
+    margin: auto;
+    display: block; /* to make sure it isn't being mucked up by your other css */
+    float: none; /* to make sure it isn't being mucked up by your other css */
+}
+
+
+.overlay {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height:auto;
+    background: rgba(0, 0, 0, 0.7);
+    transition: opacity 500ms;
+    visibility: visible;
+    opacity: 1;
+  }
+
+ 
+  /* .overlay:target {
+    visibility: visible;
+    opacity: 1;
+  } */
+  
+  .popup {
+    margin: 70px auto;
+    padding: 20px;
+    background: #fff;
+    text-align: center;
+    border-radius: 5px;
+    width: 30%;
+    position: relative;
+    transition: all 5s ease-in-out;
+    min-height: 500px;
+    height: 300px;
+    overflow: scroll;
+  }
+  
+  .popup h2 {
+    margin-top: 0;
+    color: #333;
+    font-family: Tahoma, Arial, sans-serif;
+  }
+  .popup .close {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    transition: all 200ms;
+    font-size: 30px;
+    font-weight: bold;
+    text-decoration: none;
+    color: #333;
+  }
+  .popup .close:hover {
+    color: #06D85F;
+  }
+  .popup .content {
+   max-height: 100%;
+  overflow-y: initial;
+  margin-top:13rem ;
+  padding-inline-start: 23rem;
+  }
+  
+  .paypal{
+display: block;
+
+  }
+
+
+.cart__price{
+  font-size: 1.6rem;
+  float: right;
+}
+
+.popup12 {
+  margin: 70px auto;
+  padding: 20px;
+  background: #fff;
+  text-align: center;
+  border-radius: 5px;
+  width: 33%;
+  position: relative;
+  transition: all 5s ease-in-out;
+  min-height: 500px;
+  height: 300px;
+  overflow: scroll;
+}
+.textt{
+font-family: sans-serif!important; font-size: 20px; border-bottom: 1px solid #e4e4e4; line-height: 50px;
+color: red;
+}

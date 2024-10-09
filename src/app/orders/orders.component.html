@@ -1,0 +1,316 @@
+<section class="cart__section section--padding">
+    <div class="container-fluid">
+        <div class="cart__section--inner">
+            <!-- <form action="#">  -->
+            <h3 class="cart__title mb-40 text-center">My orders</h3>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="w3-container mb-5">
+                        <div class="w3-row mb-5"> <a (click)="clickTab('Open')" style="display: block;">
+                                <div [ngClass]="{'activetab':  ActivateTab=== 'Open'}" class="w3-third tablink w3-bottombar  w3-hover-light-grey w3-padding size"> <img src="./assets/img/other/orderprocess.png" class="img">Order </div>
+                            </a> <a (click)="clickTab('Confirmed')" style="display: block;">
+                                <div [ngClass]="{'activetab':  ActivateTab=== 'Confirmed'}" class="w3-third tablink w3-bottombar  w3-hover-light-grey w3-padding size"> <img src="./assets/img/other/confirmed.png" class="img">Confirmed</div>
+                            </a> <a (click)="clickTab('Delivered')" style="display: block;">
+                                <div [ngClass]="{'activetab':  ActivateTab=== 'Delivered'}" class="w3-third tablink w3-bottombar w3-hover-light-grey w3-padding size"> <img src="./assets/img/other/deliverered.png" class="img">Delivered</div>
+                            </a> <a (click)="clickTab('Cancelled')" style="display: block;">
+                                <div [ngClass]="{'activetab':  ActivateTab=== 'Cancelled'}" class="w3-third tablink w3-bottombar w3-hover-light-grey w3-padding size"><img src="./assets/img/other/cancelledorder.png" class="img">Cancelled</div>
+                            </a> </div>
+                        <div *ngIf="ActivateTab=='Confirmed'" class=" city">
+                            <div class="accordion mb-4" id="accordionExample" *ngFor="let d of lstofFilters">
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingone"> <button class="accordion-button" style="padding-inline-end: 30px;" type="button" 
+                                        [ngClass]="ActivateCollapse ==d.OrderTrackingNumber ? 'accordion-button ' : 'accordion-button collapsed'" (click)="click(d.OrderTrackingNumber)" data-bs-toggle="collapse" 
+                                        data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                            <div class="col-md-12 ">
+                                                <div class="row">
+                                                    <div class="col-5 col-md-1"> <label style="font-size: 13px;">Order Placed </label> </div>
+                                                    <div class="col-1"> <label style="font-size: 13px;text-align: center;"><strong>:</strong></label> </div>
+                                                    <div class="col-6 col-md-2"> <label style="font-size: 13px;">{{d.OrderDatetime}}</label> </div>
+                                                    <div class="col-5 col-md-1"> <label style="font-size: 13px;">Discount </label> </div>
+                                                    <div class="col-1"> <label style="font-size: 13px;text-align: center;"><strong>:</strong></label> </div>
+                                                    <div class="col-6 col-md-2"> <label style="font-size: 13px;">{{d.CouponDiscount}}</label> </div>
+                                                    <div class="col-5 col-md-1"> <label style="font-size: 13px;">Order No </label> </div>
+                                                    <div class="col-1"> <label style="font-size: 13px;text-align: center;"><strong>:</strong></label> </div>
+                                                    <div class="col-6 col-md-2"> <label style="font-size: 13px;">#{{d.OrderTrackingNumber}}</label> </div>
+                                                    <div class="col-5 col-md-1"> <label style="font-size: 13px;">Tax </label> </div>
+                                                    <div class="col-1"> <label style="font-size: 13px;text-align: center;"><strong>:</strong></label> </div>
+                                                    <div class="col-6 col-md-2"> <label style="font-size: 13px;">{{d.OrderTax}}</label> </div>
+                                                    <div class="col-5 col-md-1"> <label style="font-size: 13px;">Total</label> </div>
+                                                    <div class="col-1"> <label style="font-size: 13px;text-align: center;"><strong>:</strong></label> </div>
+                                                    <div class="col-6 col-md-2"> <label style="font-size: 13px;">{{d.OrderNetTotal}}</label> </div>
+                                                    <div class="col-5 col-md-1"> <label style="font-size: 13px;">Delivery fee </label> </div>
+                                                    <div class="col-1"> <label style="font-size: 13px;text-align: center;"><strong>:</strong></label> </div>
+                                                    <div class="col-6 col-md-2"> <label style="font-size: 13px;">{{d.DeliveryCharges}}</label> </div>
+                                                </div>
+                                            </div>
+                                        </button> </h2>
+                                    <div id="collapseOne" class="accordion-collapse collapse " [ngClass]="ActivateCollapse ==d.OrderTrackingNumber ? 'accordion-collapse collapse show' : 'accordion-collapse collapse '" 
+                                    aria-labelledby="headingone" data-bs-parent="#accordionExample">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="cart__table">
+                                                    <table class="cart__table--inner mt-3">
+                                                        <thead class="cart__table--header">
+                                                            <tr class="cart__table--header__items">
+                                                                <th class="cart__table--header__list">&nbsp;&nbsp;&nbsp;Product</th>
+                                                                <th class="cart__table--header__list">Price</th>
+                                                                <th class="cart__table--header__list">Quantity</th>
+                                                                <th class="cart__table--header__list">Total</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody class="cart__table--body">
+                                                            <tr class="cart__table--body__items" *ngFor="let g of d.Details">
+                                                                <td class="cart__table--body__list">
+                                                                    <div class="cart__product d-flex align-items-center"> &nbsp;&nbsp; <div class="cart__thumbnail"> <img class="border-radius-5" src="{{g.ProductImage}}" alt="cart-product"> </div>
+                                                                        <div class="cart__content">
+                                                                            <h4 class="cart__content--title"><a>{{g.ProductName}}</a></h4> 
+                                                                            <span class="color__variant"> {{g.ProductOptions}} </span><br> 
+                                                                            <span class="color__variant"><b>&nbsp;Qty: </b> {{g.Qty}} </span>
+                                                                         
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+                                                                <td class="cart__table--body__list justify-content-between pe-3 ps-3"> <span class="cart__price none">Price</span> <span class="cart__price ">{{g.Price}}</span> </td>
+                                                                <td class="cart__table--body__list justify-content-between pe-3 ps-3"> <span class="cart__price none">Qty</span> <span class="cart__price">{{g.Qty}}</span> </td>
+                                                                <td class="cart__table--body__list justify-content-between pe-3 ps-3"> <span class="cart__price none">Net Total</span> <span class="cart__price end ">{{g.ProductNetTotal}}</span> </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div *ngIf="ActivateTab=='Delivered'" class=" city">
+                            <div class="accordion mb-4" id="accordionExample" *ngFor="let d of lstofFilters">
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingone"> <button class="accordion-button" type="button" style="padding-inline-end: 30px;" [ngClass]="ActivateCollapse ==d.OrderTrackingNumber ? 'accordion-button ' : 'accordion-button collapsed'" (click)="click(d.OrderTrackingNumber)" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                            <div class="col-md-12">
+                                                <div class="row">
+                                                    <div class="col-5 col-md-1"> <label style="font-size: 13px;">Order Placed </label> </div>
+                                                    <div class="col-1"> <label style="font-size: 13px;text-align: center;"><strong>:</strong></label> </div>
+                                                    <div class="col-6 col-md-2"> <label style="font-size: 13px;">{{d.OrderDatetime}}</label> </div>
+                                                    <div class="col-5 col-md-1"> <label style="font-size: 13px;">Discount </label> </div>
+                                                    <div class="col-1"> <label style="font-size: 13px;text-align: center;"><strong>:</strong></label> </div>
+                                                    <div class="col-6 col-md-2"> <label style="font-size: 13px;">{{d.CouponDiscount}}</label> </div>
+                                                    <div class="col-5 col-md-1"> <label style="font-size: 13px;">Order No </label> </div>
+                                                    <div class="col-1"> <label style="font-size: 13px;text-align: center;"><strong>:</strong></label> </div>
+                                                    <div class="col-6 col-md-2"> <label style="font-size: 13px;">#{{d.OrderTrackingNumber}}</label> </div>
+                                                    <div class="col-5 col-md-1"> <label style="font-size: 13px;">Tax </label> </div>
+                                                    <div class="col-1"> <label style="font-size: 13px;text-align: center;"><strong>:</strong></label> </div>
+                                                    <div class="col-6 col-md-2"> <label style="font-size: 13px;">{{d.OrderTax}}</label> </div>
+                                                    <div class="col-5 col-md-1"> <label style="font-size: 13px;">Total</label> </div>
+                                                    <div class="col-1"> <label style="font-size: 13px;text-align: center;"><strong>:</strong></label> </div>
+                                                    <div class="col-6 col-md-2"> <label style="font-size: 13px;">{{d.OrderNetTotal}}</label> </div>
+                                                    <div class="col-5 col-md-1"> <label style="font-size: 13px;">Delivery fee </label> </div>
+                                                    <div class="col-1"> <label style="font-size: 13px;text-align: center;"><strong>:</strong></label> </div>
+                                                    <div class="col-6 col-md-2"> <label style="font-size: 13px;">{{d.DeliveryCharges}}</label> </div>
+                                                </div>
+                                            </div>
+                                        </button> </h2>
+                                    <div id="collapseOne" class="accordion-collapse collapse " [ngClass]="ActivateCollapse ==d.OrderTrackingNumber ? 'accordion-collapse collapse show' : 'accordion-collapse collapse '" aria-labelledby="headingone" data-bs-parent="#accordionExample">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="cart__table">
+                                                    <table class="cart__table--inner mt-3">
+                                                        <thead class="cart__table--header">
+                                                            <tr class="cart__table--header__items">
+                                                                <th class="cart__table--header__list">&nbsp;&nbsp;&nbsp;Product</th>
+                                                                <th class="cart__table--header__list">Price</th>
+                                                                <th class="cart__table--header__list">Quantity</th>
+                                                                <th class="cart__table--header__list">Total</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody class="cart__table--body">
+                                                            <tr class="cart__table--body__items" *ngFor="let g of d.Details;let i=index">
+                                                                <td class="cart__table--body__list">
+                                                                    <div class="cart__product d-flex align-items-center"> &nbsp;&nbsp; <div class="cart__thumbnail"> <img class="border-radius-5" src="{{g.ProductImage}}" alt="cart-product"> </div>
+                                                                        <div class="cart__content">
+                                                                            <h4 class="cart__content--title"><a>{{g.ProductName}}</a></h4> <span class="color__variant"> {{g.ProductOptions}} </span><br> <span class="color__variant"><b>&nbsp;Qty: </b> {{g.Qty}} </span>
+                                                                            <span class="color__variant mb-0 ratings"> 
+                                                                                <div *ngIf="g.Rating>0" class="rating none2">
+                                                                                    <input type="radio" id="star5" name="'rating'+i" value="5" [attr.checked]="(g.Rating==5 ? 'checked' : null    )" disabled/><label for="star5"></label>
+                                                                                    <input type="radio" id="star4" name="'rating'+i" value="4" [attr.checked]="(g.Rating==4 ? 'checked' : null    )" disabled/><label for="star4"></label>
+                                                                                    <input type="radio" id="star3" name="'rating'+i" value="3" [attr.checked]="(g.Rating==3 ? 'checked' : null    )"  disabled/><label for="star3"></label>
+                                                                                    <input type="radio" id="star2" name="'rating'+i" value="2" [attr.checked]="(g.Rating==2 ? 'checked' : null    )"  disabled/><label for="star2"></label>
+                                                                                    <input type="radio" id="star1" name="'rating'+i" value="1" [attr.checked]="(g.Rating==1 ? 'checked' : null    )" disabled/><label for="star1"></label>
+                                                                                </div> 
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+                                                                <td class="cart__table--body__list justify-content-between pe-3 ps-3"> <span class="cart__price none ">Price</span> <span class="cart__price">{{g.Price}}</span> </td>
+                                                                <td class="cart__table--body__list justify-content-between pe-3 ps-3"> <span class="cart__price none ">Qty</span> <span class="cart__price">{{g.Qty}}</span> </td>
+                                                                <td class="cart__table--body__list justify-content-between pe-3 ps-3"> <span class="cart__price none ">Net Total</span> <span class="cart__price end">{{g.ProductNetTotal}} <br>
+                                                                    <div *ngIf="g.Rating>0" class="rating none3">
+                                                                        <input type="radio" id="star5" name="rating" value="5" [attr.checked]="(g.Rating==5 ? 'checked' : null    )" disabled /><label for="star5"></label>
+                                                                        <input type="radio" id="star4" name="rating" value="4" [attr.checked]="(g.Rating==4 ? 'checked' : null    )" disabled /><label for="star4"></label>
+                                                                        <input type="radio" id="star3" name="rating" value="3" [attr.checked]="(g.Rating==3 ? 'checked' : null    )" disabled /><label for="star3"></label>
+                                                                        <input type="radio" id="star2" name="rating" value="2" [attr.checked]="(g.Rating==2 ? 'checked' : null    )" disabled /><label for="star2"></label>
+                                                                        <input type="radio" id="star1" name="rating" value="1" [attr.checked]="(g.Rating==1 ? 'checked' : null    )" disabled /><label for="star1"></label>
+                                                                    </div>
+                                                                    
+                                                                    </span>
+                                                                    <p *ngIf="g.Rating==0"><a href="#modal-11" class="btn btn-danger" (click)="getratingDetails(g) "><i class="fa-solid fa-thumbs-up"></i>&nbsp;Rate us</a></p>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div *ngIf="ActivateTab=='Open'" class=" city">
+                            <div class="accordion mb-4" id="accordionExample" *ngFor="let d of lstofFilters">
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingone"> <button class="accordion-button" style="padding-inline-end: 30px;" type="button" [ngClass]="ActivateCollapse ==d.OrderTrackingNumber ? 'accordion-button ' : 'accordion-button collapsed'" (click)="click(d.OrderTrackingNumber)" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                            <div class="col-md-12 ">
+                                                <div class="row">
+                                                    <div class="col-5 col-md-1"> <label style="font-size: 13px;">Order Placed </label> </div>
+                                                    <div class="col-1"> <label style="font-size: 13px;text-align: center;"><strong>:</strong></label> </div>
+                                                    <div class="col-6 col-md-2"> <label style="font-size: 13px;">{{d.OrderDatetime}}</label> </div>
+                                                    <div class="col-5 col-md-1"> <label style="font-size: 13px;">Discount </label> </div>
+                                                    <div class="col-1"> <label style="font-size: 13px;text-align: center;"><strong>:</strong></label> </div>
+                                                    <div class="col-6 col-md-2"> <label style="font-size: 13px;">{{d.CouponDiscount}}</label> </div>
+                                                    <div class="col-5 col-md-1"> <label style="font-size: 13px;">Order No </label> </div>
+                                                    <div class="col-1"> <label style="font-size: 13px;text-align: center;"><strong>:</strong></label> </div>
+                                                    <div class="col-6 col-md-2"> <label style="font-size: 13px;">#{{d.OrderTrackingNumber}}</label> </div>
+                                                    <div class="col-5 col-md-1"> <label style="font-size: 13px;">Tax </label> </div>
+                                                    <div class="col-1"> <label style="font-size: 13px;text-align: center;"><strong>:</strong></label> </div>
+                                                    <div class="col-6 col-md-2"> <label style="font-size: 13px;">{{d.OrderTax}}</label> </div>
+                                                    <div class="col-5 col-md-1"> <label style="font-size: 13px;">Total</label> </div>
+                                                    <div class="col-1"> <label style="font-size: 13px;text-align: center;"><strong>:</strong></label> </div>
+                                                    <div class="col-6 col-md-2"> <label style="font-size: 13px;">{{d.OrderNetTotal}}</label> </div>
+                                                    <div class="col-5 col-md-1"> <label style="font-size: 13px;">Delivery fee </label> </div>
+                                                    <div class="col-1"> <label style="font-size: 13px;text-align: center;"><strong>:</strong></label> </div>
+                                                    <div class="col-6 col-md-2"> <label style="font-size: 13px;">{{d.DeliveryCharges}}</label> </div>
+                                                </div>
+                                            </div>
+                                        </button> </h2>
+                                    <div id="collapseOne" class="accordion-collapse collapse " [ngClass]="ActivateCollapse ==d.OrderTrackingNumber ? 'accordion-collapse collapse show' : 'accordion-collapse collapse '" aria-labelledby="headingone" data-bs-parent="#accordionExample">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="cart__table">
+                                                    <table class="cart__table--inner mt-3">
+                                                        <thead class="cart__table--header">
+                                                            <tr class="cart__table--header__items">
+                                                                <th class="cart__table--header__list">&nbsp;&nbsp;&nbsp;Product</th>
+                                                                <th class="cart__table--header__list">Price</th>
+                                                                <th class="cart__table--header__list">Quantity</th>
+                                                                <th class="cart__table--header__list">Total</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody class="cart__table--body">
+                                                            <tr class="cart__table--body__items" *ngFor="let g of d.Details">
+                                                                <td class="cart__table--body__list">
+                                                                    <div class="cart__product d-flex align-items-center"> &nbsp;&nbsp; <div class="cart__thumbnail"> <img class="border-radius-5" src="{{g.ProductImage}}" alt="cart-product"> </div>
+                                                                        <div class="cart__content">
+                                                                            <h4 class="cart__content--title"><a>{{g.ProductName}}</a></h4> <span class="color__variant"> {{g.ProductOptions}} </span><br> <span class="color__variant"><b>&nbsp;Qty: </b> {{g.Qty}} </span>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+                                                                <td class="cart__table--body__list justify-content-between pe-3 ps-3"> <span class="cart__price none">Price</span> <span class="cart__price">{{g.Price}}</span> </td>
+                                                                <td class="cart__table--body__list justify-content-between pe-3 ps-3"> <span class="cart__price none">Qty</span> <span class="cart__price">{{g.Qty}}</span> </td>
+                                                                <td class="cart__table--body__list justify-content-between pe-3 ps-3"> <span class="cart__price none">Net Total</span> <span class="cart__price end ">{{g.ProductNetTotal}}</span> </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div *ngIf="ActivateTab=='Cancelled'" class=" city">
+                            <div class="accordion mb-4" id="accordionExample" *ngFor="let d of lstofFilters">
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingone"> <button class="accordion-button" type="button" style="padding-inline-end: 30px;" [ngClass]="ActivateCollapse ==d.OrderTrackingNumber ? 'accordion-button ' : 'accordion-button collapsed'" (click)="click(d.OrderTrackingNumber)" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                            <div class="col-md-12 ">
+                                                <div class="row">
+                                                    <div class="col-5 col-md-1"> <label style="font-size: 13px;">Order Placed </label> </div>
+                                                    <div class="col-1"> <label style="font-size: 13px;text-align: center;"><strong>:</strong></label> </div>
+                                                    <div class="col-6 col-md-2"> <label style="font-size: 13px;">{{d.OrderDatetime}}</label> </div>
+                                                    <div class="col-5 col-md-1"> <label style="font-size: 13px;">Discount </label> </div>
+                                                    <div class="col-1"> <label style="font-size: 13px;text-align: center;"><strong>:</strong></label> </div>
+                                                    <div class="col-6 col-md-2"> <label style="font-size: 13px;">{{d.CouponDiscount}}</label> </div>
+                                                    <div class="col-5 col-md-1"> <label style="font-size: 13px;">Order No </label> </div>
+                                                    <div class="col-1"> <label style="font-size: 13px;text-align: center;"><strong>:</strong></label> </div>
+                                                    <div class="col-6 col-md-2"> <label style="font-size: 13px;">#{{d.OrderTrackingNumber}}</label> </div>
+                                                    <div class="col-5 col-md-1"> <label style="font-size: 13px;">Tax </label> </div>
+                                                    <div class="col-1"> <label style="font-size: 13px;text-align: center;"><strong>:</strong></label> </div>
+                                                    <div class="col-6 col-md-2"> <label style="font-size: 13px;">{{d.OrderTax}}</label> </div>
+                                                    <div class="col-5 col-md-1"> <label style="font-size: 13px;">Total</label> </div>
+                                                    <div class="col-1"> <label style="font-size: 13px;text-align: center;"><strong>:</strong></label> </div>
+                                                    <div class="col-6 col-md-2"> <label style="font-size: 13px;">{{d.OrderNetTotal}}</label> </div>
+                                                    <div class="col-5 col-md-1"> <label style="font-size: 13px;">Delivery fee </label> </div>
+                                                    <div class="col-1"> <label style="font-size: 13px;text-align: center;"><strong>:</strong></label> </div>
+                                                    <div class="col-6 col-md-2"> <label style="font-size: 13px;">{{d.DeliveryCharges}}</label> </div>
+                                                </div>
+                                            </div>
+                                        </button> </h2>
+                                    <div id="collapseOne" class="accordion-collapse collapse " [ngClass]="ActivateCollapse ==d.OrderTrackingNumber ? 'accordion-collapse collapse show' : 'accordion-collapse collapse '" aria-labelledby="headingone" data-bs-parent="#accordionExample">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="cart__table">
+                                                    <table class="cart__table--inner mt-3">
+                                                        <thead class="cart__table--header">
+                                                            <tr class="cart__table--header__items">
+                                                                <th class="cart__table--header__list">&nbsp;&nbsp;&nbsp;Product</th>
+                                                                <th class="cart__table--header__list">Price</th>
+                                                                <th class="cart__table--header__list">Quantity</th>
+                                                                <th class="cart__table--header__list">Total</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody class="cart__table--body">
+                                                            <tr class="cart__table--body__items" *ngFor="let g of d.Details">
+                                                                <td class="cart__table--body__list">
+                                                                    <div class="cart__product d-flex align-items-center"> &nbsp;&nbsp; <div class="cart__thumbnail"> <img class="border-radius-5" src="{{g.ProductImage}}" alt="cart-product"> </div>
+                                                                        <div class="cart__content">
+                                                                            <h4 class="cart__content--title"><a>{{g.ProductName}}</a></h4> <span class="color__variant"> {{g.ProductOptions}} </span><br> <span class="color__variant"><b>&nbsp;Qty: </b> {{g.Qty}} </span>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+                                                                <td class="cart__table--body__list justify-content-between pe-3 ps-3"> <span class="cart__price none">Price</span> <span class="cart__price">{{g.Price}}</span> </td>
+                                                                <td class="cart__table--body__list justify-content-between pe-3 ps-3"> <span class="cart__price none">Qty</span> <span class="cart__price">{{g.Qty}}</span> </td>
+                                                                <td class="cart__table--body__list justify-content-between pe-3 ps-3"> <span class="cart__price none">Net Total</span> <span class="cart__price end ">{{g.ProductNetTotal}}</span> </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-8 mx-auto">
+                                <div class="empty-wishlist" *ngIf="ActivateTab=='Open' && lstofFilters.length==0"> <img src="./assets/img/other/orderConfirmed.png" alt="Empty Wishlist"> <a class="btn" (click)="Startshoping()">Start Shopping</a> </div>
+                                <div class="empty-wishlist" *ngIf="ActivateTab=='Confirmed' && lstofFilters.length==0"> <img src="./assets/img/other/orderconfirmed1.jpg" style="height:52rem"> </div>
+                                <div class="empty-wishlist" *ngIf="ActivateTab=='Cancelled' && lstofFilters.length==0"> <img src="./assets/img/other/ordercancelled.png" style="height:52rem"> </div>
+                                <div class="empty-wishlist" *ngIf="ActivateTab=='Delivered' && lstofFilters.length==0"> <img src="./assets/img/other/orderdeliver.png"> </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> <!-- </form>  -->
+        </div>
+    </div>
+    <div data-ml-modal id="modal-11"> <a href="#!" class="modal-overlay"></a>
+        <div class="modal-dialog modal-dialog-lg"> <a href="#!" class="modal-close">&times;</a>
+            <h3 class="center">Rate us your Experience !..</h3>
+            <div class="modal-content">
+                <p style="font-size: 20px;padding-inline-start: 78px;font-weight: 600; color: #333232" class="mb-3"> How Would You Rate to our product ?..</p>
+                <ngx-star-rating [(ngModel)]="Ratingstar" [id]="'rating'" [disabled]="false" style="padding-inline-end: 9rem"></ngx-star-rating>
+                <div class="form-outline"> <label class="form-label" for="textAreaExample">Message</label> <textarea class="form-control" id="textAreaExample1" rows="4" placeholder="Your comment (optional)" [(ngModel)]="comment"></textarea> </div>
+                <div class="form-outline"> <a href="#!" class="btn btn-primary right" (click)="SaveRatingByProduct()">send</a> </div>
+            </div>
+        </div>
+    </div>
+</section> <!-- rating html -->

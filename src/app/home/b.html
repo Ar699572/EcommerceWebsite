@@ -1,0 +1,49 @@
+<main class="main__content_wrapper">
+    <section class="shop__section section--padding">
+        <div class="container-fluid p-5">
+            <div class="row" style="display: table;">
+                <div class="col-xl-12 col-lg-12">
+                    <div class="shop__product--wrapper">
+                        <div class="tab_content">
+                            <div id="product_grid" class="tab_pane active show">
+                                <div class="product__section--inner product__grid--inner">
+                                    <div class="row row-cols-xl-5 row-cols-lg-4 row-cols-md-3 row-cols-2 mb--n30">
+                                        <div *ngFor="let subItem of d['Child']" [attr.class]="(d.LayoutOrientation=='Two Box Layout' ? 'col-md-6 mx-auto' : (d.LayoutOrientation=='Three Box Layout' ? 'col-md-4 mx-auto':((d.LayoutOrientation=='Four Box Layout' ? 'col-md-3 mx-auto':'col-md-12 mx-auto'))))" style="display:table-cell;">
+                                            <div class="product__items user-profile" style="z-index: 9;">
+                                                <div class="product__items--thumbnail figure"> <a class="product__items--link" href="product-details.html"> <img class="product__items--img product__primary--img" src="assets/img/other/1.jpg" alt="product-img"> <img class="product__items--img product__secondary--img" src="assets/img/other/2.jpg" alt="product-img"> </a> </div>
+                                                <div class="css-popover bg__black ">
+                                                    <div class="row">
+                                                        <div class="col-md-12 mb-4">
+                                                            <p class="product-desc text-white">This Navy Stylized Neck Half Sleeves T-shirt from Peter England Casuals is made from 60% Cotton and 40% Polyester. Fashioned in Slim Fit it features a Graphic Print design.</p>
+                                                        </div>
+                                                        <div class="col-md-5"> <strong class="text-white">Online Size :</strong> </div>
+                                                        <div class="col-md-7">
+                                                            <ul class="text-white">
+                                                                <li>S</li>
+                                                                <li>M</li>
+                                                                <li>L</li>
+                                                                <li>XL</li>
+                                                                <li>XXL</li>
+                                                            </ul>
+                                                        </div>
+                                                        <div class="col-md-12 mt-4">
+                                                            <h4 class="text-white"><a href="product-detail.html">QUICK VIEW</a></h4>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="product__items--content text-center"> <strong class="text-muted">Allen solly</strong>
+                                                    <h3 class="product__items--content__title h4"><a href="product-details.html">Round Neck T Shirt</a></h3>
+                                                    <div class="product__items--price"> <span class="current__price">₹ 110</span> <span class="price__divided"></span> <span class="old__price">₹ 78</span> </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>

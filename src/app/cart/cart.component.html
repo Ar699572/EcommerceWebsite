@@ -1,0 +1,161 @@
+ 
+    <section class="cart__section section--padding">
+        <div class="container-fluid">
+            <div class="cart__section--inner">
+                <form action="#"> 
+                    <h2 class="cart__title mb-40">Shopping Cart</h2>
+                    <div class="row">
+                        <div class="col-lg-8 mx-auto">
+                            <div class="cart__table" [hidden]="hideTable==false">
+                                <table class="cart__table--inner">
+                                    <thead class="cart__table--header">
+                                        <tr class="cart__table--header__items">
+                                            <th class="cart__table--header__list">Product</th>
+                                            <th class="cart__table--header__list">Price</th>
+                                            <th class="cart__table--header__list">Quantity</th>
+                                            <th class="cart__table--header__list">Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="cart__table--body">
+                                        <tr class="cart__table--body__items" *ngFor="let crt of lstCartList;let ind =index" >
+                                            <td class="cart__table--body__list">
+                                                <div class="cart__product d-flex align-items-center">
+                                                    <button  (click)="removeClick(crt,ind)" class="cart__remove--btn" aria-label="search button" type="button">
+                                                        <svg fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16px" height="16px"><path d="M 4.7070312 3.2929688 L 3.2929688 4.7070312 L 10.585938 12 L 3.2929688 19.292969 L 4.7070312 20.707031 L 12 13.414062 L 19.292969 20.707031 L 20.707031 19.292969 L 13.414062 12 L 20.707031 4.7070312 L 19.292969 3.2929688 L 12 10.585938 L 4.7070312 3.2929688 z"></path></svg>
+                                                    </button>
+                                                    <div class="cart__thumbnail">
+                                                        <a href="#"><img class="border-radius-5" src={{crt.ProductImage}} alt="cart-product"></a>
+                                                    </div>
+                                                    <div class="cart__content">
+                                                        <h4 class="cart__content--title"><a >{{crt.ProductName}}</a></h4>
+                                                        <span class="color__variant" *ngIf="crt.OPGName1!=''"><b>{{crt.OPGName1}}: </b> {{crt.OPName1}} </span>
+                                                        <span class="color__variant"  *ngIf="crt.OPGName2!=''"><b>,{{crt.OPGName2}}: </b> {{crt.OPName2}} </span>
+                                                        <span class="color__variant"  *ngIf="crt.OPGName3!=''"><b>,{{crt.OPGName3}}: </b> {{crt.OPName3}} </span>
+                                                        <span class="color__variant"  *ngIf="crt.OPGName4!=''"><b>,{{crt.OPGName4}}: </b> {{crt.OPName4}} </span>
+                                                      
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="cart__table--body__list">
+                                                <span class="cart__price">{{crt.SalesPrice|currency:Currency}}</span>
+                                            </td>
+                                            <td class="cart__table--body__list">
+                                                <div class="quantity__box">
+                                                    <button type="button" class="quantity__value quickview__value--quantity decrease" (click)="decreaseClick(crt,ind)" aria-label="quantity value" value="Decrease Value">-</button>
+                                                    <label>
+                                                        <input type="number" class="quantity__number quickview__value--number" value={{crt.Qty}} data-counter="">
+                                                    </label>
+                                                    <button type="button" class="quantity__value quickview__value--quantity increase" (click)="increaseClick(crt,ind)" aria-label="quantity value" value="Increase Value">+</button>
+                                                </div>
+                                                <div class="quantity__box" *ngIf="crt.qtyValidation">
+                                                    <label style="color:red"><strong>out of stock Qty</strong></label>  
+                                                </div>
+                                            </td>
+                                            <td class="cart__table--body__list">
+                                                <span class="cart__price end">{{crt.ProductNetTotal|currency:Currency}}</span>
+                                            </td>
+                                        </tr>
+                                       
+                                    </tbody>
+                                </table> 
+                                <div class="continue__shopping d-flex justify-content-between">
+                                    <a class="continue__shopping--link" (click)="ContinueShopping()" >Continue shopping</a>
+                                    <button class="continue__shopping--clear" (click)="ClearCart()" type="submit">Clear Cart</button>
+                                </div>
+                            </div>
+                            <div class="cart-wishlist" [hidden]="hideTable" >
+                                <img src="../../assets/img/other/emptycart.png" alt="Empty Wishlist">
+                                <p>Your Cart is empty. Start adding items you'd like to save for later!</p>
+                                <a (click)="ContinueShopping()" class="btn">Continue Shopping</a>
+                              </div>
+                        </div>
+                        <div class="col-lg-4" [hidden]="hideTable==false">
+                            <div class="cart__summary border-radius-10">
+                                <div class="coupon__code mb-30">
+                                    <h3 class="coupon__code--title">Order Summary</h3>
+                                    <p class="coupon__code--desc">{{lstCartList.length}} Items</p>
+                                   
+                                </div>
+                                
+                                <div class="cart__summary--total mb-20">
+                                    <table class="cart__summary--total__table mb-5">
+                                        <tbody>
+                                            <tr class="cart__summary--total__list">
+                                                <td class="cart__summary--total__title text-left">Order Value</td>
+                                                <td class="cart__summary--amount text-right">{{objCart.OrderGrossAmount |currency:storeSettings.currency}}</td>
+                                            </tr>
+                                            <tr class="cart__summary--total__list" >
+                                                <td class="cart__summary--total__title text-left">CGST</td>
+                                                <td class="cart__summary--amount text-right">{{objCart.CGSTAmt |currency:storeSettings.currency }}</td>
+                                               
+                                            </tr>
+                                            <tr class="cart__summary--total__list">
+                                                <td class="cart__summary--total__title text-left">SGST</td>
+                                                <td class="cart__summary--amount text-right">{{objCart.SGSTAmt |currency:storeSettings.currency }}</td>
+                                               
+                                            </tr>
+                                            <tr class="cart__summary--total__list">
+                                                <td class="cart__summary--total__title text-left">Product Discount</td>
+                                                <td class="cart__summary--amount text-right">{{objCart.OrderDiscount |currency:storeSettings.currency}}</td>
+                                            </tr>
+                                            <tr class="cart__summary--total__list">
+                                                <td class="cart__summary--total__title text-left">Delivery Charges</td>
+                                                <td class="cart__summary--amount text-right">{{objCart.DeliveryCharges |currency:storeSettings.currency}}</td>
+                                            </tr>
+
+                                        </tbody>
+                                        <tbody style="margin-top: 1rem;display: block;border-top: 1px dashed #c9c9c9;">
+                                            <tr class="cart__summary--total__list mt-3">
+                                                <td class="cart__summary--total__title text-left">Grand Total</td>
+                                                <td class="cart__summary--amount text-right">{{((+objCart.OrderNetTotal)-(+objCart.OrderDiscount) + (+objCart.DeliveryCharges))|currency:storeSettings.currency}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                    <div class="coupon__code--field d-flex" >
+                                        <div class="input-group mb-3" hidden>
+                                            <input type="text" id="txtCouponCode" name="txtCouponCode" class="form-control bg__secondary" placeholder="Enter Coupon" aria-label="Enter Coupon" aria-describedby="basic-addon2">
+                                            <div class="input-group-append" (click)="ApplyCoupon()">
+                                              <span class="input-group-text bg__secondary" id="basic-addon2" style="background: #ea0029;color: white;">Apply</span>
+                                            </div>
+                                          </div>
+                                    </div>
+
+                                </div>
+                                <div class="cart__summary--footer">
+                                    <button class="variant__buy--now__btn primary__btn" type="submit" (click)="checkoutClick()"><a>Checkout</a></button>
+                                    
+                                </div>
+
+                                
+                            </div> 
+                        </div>
+                    </div> 
+
+                    <div class="modal fade in" id="myModal" role="dialog" style="z-index:999 !important;"
+  [style.display]="(ErrorMessage =='' ? 'none !important' : 'block !important')">
+  <div class="modal-dialog" style="width: 388px;">
+
+
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+      </div>
+      <div class="modal-body">
+        <h4 class="modal-title" style="width:100%;text-align: center;font-size: 27px;"><i class="fa fa-close"
+            style="background: #f21330; color: white; padding: 7px 10px 7px 9px; border-radius: 50%; font-size: 20px; margin: 5px;"></i>{{MsgType}}
+        </h4>
+        <p style="text-align:center;">{{ErrorMessage}}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" style="float: right;">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+                </form> 
+            </div>
+        </div>     
+    </section>

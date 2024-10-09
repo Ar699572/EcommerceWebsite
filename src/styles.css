@@ -1,0 +1,131 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import url("./assets/css/plugins/swiper-bundle.min.css");
+@import url("./assets/css/plugins/glightbox.min.css");
+@import url("./assets/css/vendor/select2/css/select2.min.css"); 
+@import url("./assets/css/vendor/bootstrap.min.css");
+@import url("./assets/css/style.css");
+@import url("../node_modules/font-awesome/css/font-awesome.min.css");
+
+
+@import url("./assets/css/animate.min.css");
+
+@import url("./../node_modules/owl.carousel/dist/assets/owl.carousel.min.css");  
+@import url("./../node_modules/owl.carousel/dist/assets/owl.theme.default.min.css");  
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+
+
+/* @import url("../src/assets/css/owl.carousel.css");
+@import url("../src/assets/css/owl.theme.css");
+@import url("../src/assets/css/owl.transitions.css"); */
+/* .owl-carousel .owl-dots.disabled, .owl-carousel .owl-nav.disabled {
+    display: block !important;
+} */
+
+.rating {
+	color: #999;
+	font-size: 12px
+}
+.rating .fa-star {
+	color: #FC0
+}
+
+
+
+.validate-error
+{
+    color: red;
+    font-weight: 600
+}
+
+.w3-btn, .w3-button{
+    border: none;
+    display: inline-block;
+    padding: 8px 16px;
+    vertical-align: middle;
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    background-color: inherit;
+    text-align: center;
+    cursor: pointer;
+    white-space: nowrap;
+    font-size: 28px;
+    background: red;
+    color: white;
+}
+
+.w3-modal {
+    z-index: 3;
+    display: none;
+    padding-top: 100px;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    /* background-color: rgb(0,0,0); */
+    background-color: rgb(0 0 0 / 82%);
+}
+.w3-button:hover {
+     color: #fff!important; 
+     background-color: red!important;
+}
+/* .swal2-container {
+    zoom: 1.4 !important;
+  }
+  .swal2-styled {
+    padding: 0.625em 2.1em !important;
+} */
+.swal2-popup {
+    font-size: 1.4rem !important;
+  }
+.reg:hover{
+    color: #ea0029;
+}
+
+
+/* Media query for desktop viewport */
+/* sarwar code starts */
+.bt-edit{
+    background:#9E9E9E ;
+}
+.footer-heading{
+    color:#ea0029 ;
+}
+.ratings{
+    float: right;
+    margin-right: 64px;
+}
+/* sarwar code ends */
+
+
+.heart{
+    color: #ffffff;
+    margin-top: 8px;
+    margin-left: 70px;
+    font-size: 30px;
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    z-index: 9999;
+    display: block;
+    background: red;
+  }
+  
+  .heart-active{
+    color: #C50707;
+  }
+  
+  .heart:hover{
+    color: red;
+    background-color: #f9f9f9;
+    -webkit-transition: all 1s ease;
+    -moz-transition: all 1s ease;
+    -o-transition: all 1s ease;
+    transition: all 1s ease-in-out;
+  }

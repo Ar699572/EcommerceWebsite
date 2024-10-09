@@ -1,0 +1,1283 @@
+
+
+
+<owl-carousel [options]="SlideOptions" [items]="lstBanners" [carouselClasses]="['owl-theme', 'sliding']">
+    <div class="item" *ngFor="let d of lstBanners">
+        <div> <img (click)="BannerClick(d.BannerType,d.BannerTypeId,d.Image,d.BannersName,d.IsParentCategory)" style="max-height: 600px; width:100%;cursor: pointer;" src={{ImagePath+d.Image}} alt="" /> </div>
+    </div>
+</owl-carousel>
+<div *ngFor="let d of lstHomeScreanSettings;">
+    <div class="row" *ngIf="d.Region=='Full' ">
+        <div [class]="'col-md-12 '" *ngIf="d.LayoutOrientation=='Multi View Sliding' && d.LayoutViewType!='FlashMassage'  && d.LayoutViewType!='Category' && d.LayoutViewType!='Product' " style="margin-bottom: 4px;">
+            <owl-carousel [options]="{items:d.ItemsToShow , dots: false, navigation: false,autoplay:true,loop:true}" [items]="d['Child']" [carouselClasses]="['owl-theme', 'sliding']">
+                <div class="brand__logo--section bg__secondary section--padding color-scheme-1 " *ngFor="let subItem of d['Child'];let i = index">
+                    <div class="brand__logo--section__inner d-flex justify-content-center align-items-center">
+                        <div class="brand__logo--items"> <a (click)="ProductDetByType(d.LayoutViewType,subItem.LayoutViewID,subItem.Title,subItem.Image)" class="product-item-photo"> <img class="product-image-photo" src={{ImagePath+subItem.Image}} alt="" style="cursor: pointer;"></a> </div>
+                    </div>
+                </div>
+            </owl-carousel>
+        </div>
+        <div [class]="'col-md-12 '" *ngIf="d.LayoutOrientation=='Multi View Sliding' && d.LayoutViewType!='FlashMassage'  && d.LayoutViewType=='Category'">
+            <div *ngFor="let subItem of d['Child']" class="related-product-area">
+                <div class="page-header" style="margin-bottom: 25px;">
+                    <h3 class="name">{{subItem.Title}} </h3>
+                </div>
+                <owl-carousel [options]="{items: d.ItemsToShow, dots: false, navigation: false,autoplay:true,loop:true}" [items]="subItem['ChildDetails']" [carouselClasses]="['owl-theme', 'sliding']">
+                    <div class="item" *ngFor="let subItemDet of subItem['ChildDetails'];let i = index">
+                        <div class="product-item">
+                            <div class="item-inner">
+                                <div class="product-thumbnail"> <a (click)="ProductClick(subItemDet.ProductOptionID,subItemDet.ProductID,subItemDet.ProductImage)" class="product-item-photo" style="cursor: pointer;"> <img class="product-image-photo" src={{ImagePath+subItemDet.ProductImage}} alt="" style="width: 408px;
+                      height: 252px;"></a> </div>
+                                <div class="pro-box-info">
+                                    <div class="item-info">
+                                        <div class="info-inner">
+                                            <div class="item-title"> <a (click)="ProductClick(subItemDet.ProductOptionID,subItemDet.ProductID,subItemDet.ProductImage)" style="cursor: pointer;">{{subItemDet.ProductName}} </a> </div>
+                                        </div>
+                                    </div>
+                                    <div class="box-hover">
+                                        <div class="product-item-actions">
+                                            <div class="pro-actions"> <button class="action add-to-cart" type="button" title="Shop Now" (click)="ProductClick(subItemDet.ProductOptionID,subItemDet.ProductID,subItemDet.ProductImage)" style="cursor: pointer;"> <span>Shop Now </span> </button> </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </owl-carousel>
+            </div>
+        </div>
+        <div [class]="'col-md-12 '" *ngIf="d.LayoutViewType=='FlashMassage'">
+            <p>
+                <marquee style="
+            font-size: 22px;
+            margin-top: 10px;
+            margin-bottom: -20px;
+            background: #3B9BF2;
+            padding: 10px;
+            color: white;">{{d.SubTiltle}}</marquee>
+            </p>
+        </div>
+        <div [class]="'col-md-12 mt-3'" *ngIf="d.LayoutOrientation=='Horizontal' && d['Child'].length>0">
+            <section *ngFor="let subItem of d['Child'];let i = index" style="background: #e3c59d30;">
+                <div class="row ">
+                    <div class="col-md-12"> <a [href]="subItem.Subtitle" class="w-100"> <img src={{ImagePath+subItem.Image}} alt="" class="w-100"> </a></div>
+                </div>
+            </section>
+        </div>
+        <div class="row" *ngIf="d.LayoutViewType!='Category'   &&  d.LayoutViewType!='FlashMassage'  && d.LayoutOrientation!='Horizontal'    &&  d.LayoutOrientation!='Multi View Sliding' ">
+            <div *ngFor="let subItem of d['Child']" [attr.class]="(d.LayoutOrientation=='Two Box Layout' ? 'col-md-6 mx-auto' : (d.LayoutOrientation=='Three Box Layout' ? 'col-md-4 mx-auto':(
+            
+            
+                          (d.LayoutOrientation=='Four Box Layout' ? 'col-md-3 mx-auto':'col-md-12 mx-auto')
+            
+                      )))">
+                <div *ngIf="subItem.Title!='' "> <a (click)="ProductDetByType(d.LayoutViewType,subItem.LayoutViewID,subItem.Title,subItem.Image)" style="cursor: pointer;"><img class="img-respo " alt="jtv-subbanner1" src={{ImagePath+subItem.Image}} style="width:510px;height: 315px;border: 3px solid white;"></a>
+                    <div class="product__items--content text-center">
+                        <div class="product__items--price" *ngIf="subItem.Title!=''"><a>{{subItem.Title}}</a></div>
+                        <div class="product__items--content__title h4" *ngIf="subItem.Subtitle!=''"><a>{{subItem.Subtitle}}</a></div>
+                        <div class="variant__buy--now__btn primary__btn outline"><a (click)="ProductDetByType(d.LayoutViewType,subItem.LayoutViewID,subItem.Title,subItem.Image)" style="cursor: pointer;">Shop Now</a></div> <br>
+                    </div>
+                </div> <img *ngIf="subItem.Title==''" src={{ImagePath+subItem.Image}} class="img-responsive" width="100%">
+            </div>
+        </div>
+        <div *ngIf="d.LayoutViewType=='Category'       &&  d.LayoutOrientation!='Multi View Sliding' ">
+            <div class="row" *ngFor="let subItem of d['Child']" style="margin-bottom: -25px;">
+                <div class="col-md-12" style="margin-top: 10px ;margin-bottom: 25px;">
+                    <h3 *ngIf="subItem.Title!='' && (+d.ShowTitle)==1" class="name">{{subItem.Title}}</h3>
+                </div>
+                <div class="row" style="display: table;">
+                    <div class="col-xl-12 col-lg-12">
+                        <div class="shop__product--wrapper">
+                            <div class="tab_content">
+                                <div id="product_grid" class="tab_pane active show">
+                                    <div class="product__section--inner product__grid--inner">
+                                        <div class="row row-cols-xl-5 row-cols-lg-4 row-cols-md-3 row-cols-2 mb--n30">
+                                            <div *ngFor="let subItemDet of subItem['ChildDetails']" [attr.class]="(d.LayoutOrientation=='Two Box Layout' ? 'col-md-6  mx-auto ' : (d.LayoutOrientation=='Three Box Layout' ? 'col-md-4  mx-auto':(
+            
+            
+                          (d.LayoutOrientation=='Four Box Layout' ? 'col-md-3  mx-auto':'col-md-12' )
+            
+                      )))" class="col mb-30" style="display:table-cell;">
+                                                <div (mouseover)="hover=true;productMouseOverCall(subItemDet.ProductID)" (mouseleave)="hover=false" [class]="hover==true  ? 'product__items user-profile' : 'product__items'">
+                                                    <div class="product__items--thumbnail figure"> <a class="product__items--link" href="product-details.html"> <img class="product__items--img product__primary--img" src={{ImagePath+subItemDet.ProductImage}} alt="product-img"> <img class="product__items--img product__secondary--img" src={{ImagePath+subItemDet.ProductImage}} alt="product-img"> </a> </div>
+                                                    <div class="css-popover bg__black " [style.z-index]="hover==true  ? 9 : 0">
+                                                        <div class="row">
+                                                            <div class="col-md-12 mb-4">
+                                                                <p class="product-desc text-white">{{subItemDet.ProductShortDesc!=''?subItemDet.ProductShortDesc:subItemDet.ProductName}}</p>
+                                                            </div> <span *ngFor="let o of selectedProductOptions">
+                                                                <!-- <div class="col-md-5">
+                                                                    <strong class="text-white">{{o.Name}}</strong>
+                                                                </div> -->
+                                                                <div class="col-md-12">
+                                                                    <ul class="text-white">
+                                                                        <li><strong class="text-white">{{o.Name}}</strong>: {{o.Options}}</li>
+                                                                    </ul>
+                                                                </div>
+                                                            </span>
+                                                            <div class="col-md-12 mt-4">
+                                                                <h4 class="text-white"><a href="product-detail.html">QUICK VIEW</a></h4>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="product__items--content text-center"> <strong class="text-muted">{{subItemDet.ProductName}}</strong>
+                                                        <h3 class="product__items--content__title h4"><a href="product-details.html">Checks Shirt</a></h3>
+                                                        <div class="product__items--price"> <span class="current__price" *ngIf="subItemDet.SalesPrice!=''">{{subItemDet.SalesPrice | currency:Currency}}</span> <span class="current__price" *ngIf="subItemDet.Price!='' && (+subItemDet.SalesPrice) != (+subItemDet.Price)">{{subItemDet.Price| currency:Currency}}</span> </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div   *ngFor="let subItemDet of subItem['ChildDetails']" [attr.class]="(d.LayoutOrientation=='Two Box Layout' ? 'col-md-6  mx-auto ' : (d.LayoutOrientation=='Three Box Layout' ? 'col-md-4  mx-auto':(
+            
+            
+                          (d.LayoutOrientation=='Four Box Layout' ? 'col-md-3  mx-auto':'col-md-12' )
+            
+                      )))">
+                          
+                          
+                          
+                            <a (click)="ProductClick(subItemDet.ProductOptionID,subItemDet.ProductID,subItemDet.ProductImage)" style="cursor: pointer;"><img class="img-respo " alt="jtv-subbanner1" src={{ImagePath+subItemDet.ProductImage}}  style="margin-bottom: 0;width:510px;height: 315px;border: 3px solid white;"></a>
+                          <div class="product__items--content text-center">
+                            <div class="product__items--price" *ngIf="subItemDet.SalesPrice!=''"><a >{{subItemDet.SalesPrice| currency:Currency}} <span *ngIf="subItemDet.Price!='' && (+subItemDet.SalesPrice) != (+subItemDet.Price)" class="price" style='text-decoration:line-through'> {{subItemDet.Price| currency:Currency}}  </span>  </a></div>
+            
+                         
+                             
+            
+            
+                            <div class="product__items--content__title h4" *ngIf="subItemDet.ProductName!=''" ><a >{{subItemDet.ProductName}}</a></div>
+                            <div class="variant__buy--now__btn primary__btn outline"><a (click)="ProductClick(subItemDet.ProductOptionID,subItemDet.ProductID,subItemDet.ProductImage)" style="cursor: pointer;">Shop Now</a></div>
+                            <br>
+                          </div>
+                        </div> -->
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+</div> <!-- Left Right Region -->
+<div class="row" *ngIf="(isHomeScreenContainsLeftRegion && isHomeScreenContainsRightRegion )">
+    <div class="col-md-2 mx-auto">
+        <div *ngFor="let d of lstHomeScreanSettings;">
+            <div class="row" *ngIf="d.Region=='Left'">
+                <div class="col-md-12">
+                    <owl-carousel [options]="{items: 1, dots: false, navigation: false,autoplay:true,loop:true}" [items]="d['Child']" [carouselClasses]="['owl-theme', 'sliding']">
+                        <div *ngFor="let subItem of d['Child'];"> <img src={{ImagePath+subItem.Image}} (click)="ProductDetByType(d.LayoutViewType,subItem.LayoutViewID,subItem.Title,subItem.Image)" style="width: 100%;padding-right: 15px;padding-left: 15px;cursor: pointer;"> </div>
+                    </owl-carousel>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8 mx-auto">
+        <div *ngFor="let d of lstHomeScreanSettings;">
+            <div class="row" *ngIf="d.Region=='Center' ">
+                <div [class]="'col-md-12 '" *ngIf="d.LayoutOrientation=='Multi View Sliding' && d.LayoutViewType!='FlashMassage'  && d.LayoutViewType!='Category' && d.LayoutViewType!='Product' " style="margin-bottom: 4px;">
+                    <owl-carousel [options]="{items:d.ItemsToShow , dots: false, navigation: false,autoplay:true,loop:true}" [items]="d['Child']" [carouselClasses]="['owl-theme', 'sliding']">
+                        <div class="brand__logo--section  section--padding  " *ngFor="let subItem of d['Child'];let i = index">
+                            <div class="brand__logo--section__inner d-flex justify-content-center align-items-center">
+                                <div class="brand__logo--items"> <a (click)="ProductDetByType(d.LayoutViewType,subItem.LayoutViewID,subItem.Title,subItem.Image)" class="product-item-photo"> <img class="product-image-photo" src={{ImagePath+subItem.Image}} alt="" style="cursor: pointer;"></a> </div>
+                            </div>
+                        </div>
+                    </owl-carousel>
+                </div>
+                <div [class]="'col-md-12 '" *ngIf="d.LayoutOrientation=='Multi View Sliding' && d.LayoutViewType!='FlashMassage'  && d.LayoutViewType=='Category'">
+                    <div *ngFor="let subItem of d['Child']" class="related-product-area">
+                        <div class="page-header" style="margin-bottom: 25px;">
+                            <h3 class="name">{{subItem.Title}} </h3>
+                        </div>
+                        <owl-carousel [options]="{items: d.ItemsToShow, dots: false, navigation: false,autoplay:true,loop:true}" [items]="subItem['ChildDetails']" [carouselClasses]="['owl-theme', 'sliding']">
+                            <div class="item" *ngFor="let subItemDet of subItem['ChildDetails'];let i = index">
+                                <div class="product-item">
+                                    <div class="item-inner">
+                                        <div class="product-thumbnail"> <a (click)="ProductClick(subItemDet.ProductOptionID,subItemDet.ProductID,subItemDet.ProductImage)" class="product-item-photo" style="cursor: pointer;"> <img class="product-image-photo" src={{ImagePath+subItemDet.ProductImage}} alt="" style="width: 408px;
+                          height: 252px;"></a> </div>
+                                        <div class="pro-box-info">
+                                            <div class="item-info">
+                                                <div class="info-inner">
+                                                    <div class="item-title"> <a (click)="ProductClick(subItemDet.ProductOptionID,subItemDet.ProductID,subItemDet.ProductImage)" style="cursor: pointer;">{{subItemDet.ProductName}} </a> </div>
+                                                </div>
+                                            </div>
+                                            <div class="box-hover">
+                                                <div class="product-item-actions">
+                                                    <div class="pro-actions"> <button class="action add-to-cart" type="button" title="Shop Now" (click)="ProductClick(subItemDet.ProductOptionID,subItemDet.ProductID,subItemDet.ProductImage)" style="cursor: pointer;"> <span>Shop Now </span> </button> </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </owl-carousel>
+                    </div>
+                </div>
+                <div [class]="'col-md-12 '" *ngIf="d.LayoutViewType=='FlashMassage'">
+                    <p>
+                        <marquee style="
+                font-size: 22px;
+                margin-top: 10px;
+                margin-bottom: -20px;
+                background: #3B9BF2;
+                padding: 10px;
+                color: white;">{{d.SubTiltle}}</marquee>
+                    </p>
+                </div>
+                <div [class]="'col-md-12 mt-3'" *ngIf="d.LayoutOrientation=='Horizontal' && d['Child'].length>0">
+                    <section *ngFor="let subItem of d['Child'];let i = index" style="background: #e3c59d30;">
+                        <div class="row ">
+                            <div class="col-md-12"> <a [href]="subItem.Subtitle" class="w-100"> <img src={{ImagePath+subItem.Image}} alt="" class="w-100"> </a></div>
+                        </div>
+                    </section>
+                </div>
+                <div class="row" *ngIf="d.LayoutViewType!='Category'   &&  d.LayoutViewType!='FlashMassage'  && d.LayoutOrientation!='Horizontal'    &&  d.LayoutOrientation!='Multi View Sliding' ">
+                    <div *ngFor="let subItem of d['Child']" [attr.class]="(d.LayoutOrientation=='Two Box Layout' ? 'col-md-6 mx-auto' : (d.LayoutOrientation=='Three Box Layout' ? 'col-md-4 mx-auto':(
+                
+                
+                              (d.LayoutOrientation=='Four Box Layout' ? 'col-md-3 mx-auto':'col-md-12 mx-auto')
+                
+                          )))">
+                        <div *ngIf="subItem.Title!=''  "> <a (click)="ProductDetByType(d.LayoutViewType,subItem.LayoutViewID,subItem.Title,subItem.Image)" style="cursor: pointer;"><img class="img-respo " alt="jtv-subbanner1" src={{ImagePath+subItem.Image}} style="width:510px;height: 315px;border: 3px solid white;"></a>
+                            <div class="product__items--content text-center">
+                                <div class="product__items--price" *ngIf="subItem.Title!=''"><a>{{subItem.Title}}</a></div>
+                                <div class="product__items--content__title h4" *ngIf="subItem.Subtitle!=''"><a>{{subItem.Subtitle}}</a></div>
+                                <div class="variant__buy--now__btn primary__btn outline"><a (click)="ProductDetByType(d.LayoutViewType,subItem.LayoutViewID,subItem.Title,subItem.Image)" style="cursor: pointer;">Shop Now</a></div> <br>
+                            </div>
+                        </div> <img *ngIf="subItem.Title==''" src={{ImagePath+subItem.Image}} class="img-responsive" width="100%">
+                    </div>
+                </div>
+                <div *ngIf="d.LayoutViewType=='Category'       &&  d.LayoutOrientation!='Multi View Sliding' ">
+                    <div class="row" *ngFor="let subItem of d['Child']" style="margin-bottom: -25px;">
+                        <div class="col-md-12" style="margin-top: 10px ;margin-bottom: 25px;">
+                            <h3 *ngIf="subItem.Title!='' && (+d.ShowTitle)==1" class="name">{{subItem.Title}}</h3>
+                        </div>
+                        <div class="row" style="display: table;">
+                            <div class="col-xl-12 col-lg-12">
+                                <div class="shop__product--wrapper">
+                                    <div class="tab_content">
+                                        <div id="product_grid" class="tab_pane active show">
+                                            <div class="product__section--inner product__grid--inner">
+                                                <div class="row row-cols-xl-5 row-cols-lg-4 row-cols-md-3 row-cols-2 mb--n30">
+                                                    <div *ngFor="let subItemDet of subItem['ChildDetails']" [attr.class]="(d.LayoutOrientation=='Two Box Layout' ? 'col-md-6  mx-auto ' : (d.LayoutOrientation=='Three Box Layout' ? 'col-md-4  mx-auto':(
+                
+                
+                              (d.LayoutOrientation=='Four Box Layout' ? 'col-md-3  mx-auto':'col-md-12' )
+                
+                          )))" class="col mb-30" style="display:table-cell;">
+                                                        <div (mouseover)="hover=true;productMouseOverCall(subItemDet.ProductID)" (mouseleave)="hover=false" [class]="hover==true  ? 'product__items user-profile' : 'product__items'">
+                                                            <div class="product__items--thumbnail figure"> <a class="product__items--link" href="product-details.html"> <img class="product__items--img product__primary--img" src={{ImagePath+subItemDet.ProductImage}} alt="product-img"> <img class="product__items--img product__secondary--img" src={{ImagePath+subItemDet.ProductImage}} alt="product-img"> </a> </div>
+                                                            <div class="css-popover bg__black " [style.z-index]="hover==true  ? 9 : 0">
+                                                                <div class="row">
+                                                                    <div class="col-md-12 mb-4">
+                                                                        <p class="product-desc text-white">{{subItemDet.ProductShortDesc!=''?subItemDet.ProductShortDesc:subItemDet.ProductName}}</p>
+                                                                    </div> <span *ngFor="let o of selectedProductOptions">
+                                                                        <!-- <div class="col-md-5">
+                                                                        <strong class="text-white">{{o.Name}}</strong>
+                                                                    </div> -->
+                                                                        <div class="col-md-12">
+                                                                            <ul class="text-white">
+                                                                                <li><strong class="text-white">{{o.Name}}</strong>: {{o.Options}}</li>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </span>
+                                                                    <div class="col-md-12 mt-4">
+                                                                        <h4 class="text-white"><a href="product-detail.html">QUICK VIEW</a></h4>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="product__items--content text-center"> <strong class="text-muted">{{subItemDet.ProductName}}</strong>
+                                                                <h3 class="product__items--content__title h4"><a href="product-details.html">Checks Shirt</a></h3>
+                                                                <div class="product__items--price"> <span class="current__price" *ngIf="subItemDet.SalesPrice!=''">{{subItemDet.SalesPrice | currency:Currency}}</span> <span class="current__price" *ngIf="subItemDet.Price!='' && (+subItemDet.SalesPrice) != (+subItemDet.Price)">{{subItemDet.Price| currency:Currency}}</span> </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div   *ngFor="let subItemDet of subItem['ChildDetails']" [attr.class]="(d.LayoutOrientation=='Two Box Layout' ? 'col-md-6  mx-auto ' : (d.LayoutOrientation=='Three Box Layout' ? 'col-md-4  mx-auto':(
+                
+                
+                              (d.LayoutOrientation=='Four Box Layout' ? 'col-md-3  mx-auto':'col-md-12' )
+                
+                          )))">
+                              
+                              
+                              
+                                <a (click)="ProductClick(subItemDet.ProductOptionID,subItemDet.ProductID,subItemDet.ProductImage)" style="cursor: pointer;"><img class="img-respo " alt="jtv-subbanner1" src={{ImagePath+subItemDet.ProductImage}}  style="margin-bottom: 0;width:510px;height: 315px;border: 3px solid white;"></a>
+                              <div class="product__items--content text-center">
+                                <div class="product__items--price" *ngIf="subItemDet.SalesPrice!=''"><a >{{subItemDet.SalesPrice| currency:Currency}} <span *ngIf="subItemDet.Price!='' && (+subItemDet.SalesPrice) != (+subItemDet.Price)" class="price" style='text-decoration:line-through'> {{subItemDet.Price| currency:Currency}}  </span>  </a></div>
+                
+                             
+                                 
+                
+                
+                                <div class="product__items--content__title h4" *ngIf="subItemDet.ProductName!=''" ><a >{{subItemDet.ProductName}}</a></div>
+                                <div class="variant__buy--now__btn primary__btn outline"><a (click)="ProductClick(subItemDet.ProductOptionID,subItemDet.ProductID,subItemDet.ProductImage)" style="cursor: pointer;">Shop Now</a></div>
+                                <br>
+                              </div>
+                            </div> -->
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="row" *ngIf="d.Region=='Center'">
+        <div [class]=" 'col-md-12 '"      *ngIf="d.LayoutOrientation=='Multi View Sliding'  && ( d.Region=='Center' ) && d.LayoutViewType!='Category' && d.LayoutViewType!='Product' "
+        
+        style="margin-bottom: 4px;"  >
+                     
+           
+    
+            <owl-carousel 
+            [options]="{items:d.ItemsToShow , dots: false, navigation: false,autoplay:true,loop:true}"
+            
+            [items]="d['Child']"
+            
+            [carouselClasses]="['owl-theme', 'sliding']">
+           
+        
+            <div  class="brand__logo--section bg__secondary section--padding color-scheme-1 "  *ngFor="let subItem of d['Child'];let i = index">
+                
+        
+                <div class="brand__logo--section__inner d-flex justify-content-center align-items-center">
+                    <div class="brand__logo--items">
+                     
+                     
+                        
+                        <a (click)="ProductDetByType(d.LayoutViewType,subItem.LayoutViewID,subItem.Title,subItem.Image)"  class="product-item-photo">  <img class="product-image-photo" src={{ImagePath+subItem.Image}} alt="" style="cursor: pointer;"></a> 
+                          
+                     
+                    </div>
+                  </div>
+              </div>
+        </owl-carousel>
+    
+    
+           
+    
+      
+    </div>
+    
+    
+    <div  [class]="'col-md-12 '"   *ngIf="d.LayoutOrientation=='Multi View Sliding'  && ( d.Region=='Center' ) && d.LayoutViewType=='Category'"  >
+        
+        <div *ngFor="let subItem of d['Child']"   class="related-product-area">
+            <div class="page-header" style="margin-bottom: 25px;">
+              <h3 class="name">{{subItem.Title}}    </h3>
+            </div>
+            
+        <owl-carousel 
+        [options]="{items: d.ItemsToShow, dots: false, navigation: false,autoplay:true,loop:true}"
+        
+        [items]="subItem['ChildDetails']"
+        
+        [carouselClasses]="['owl-theme', 'sliding']">
+       
+    
+        <div class="item" *ngFor="let subItemDet of subItem['ChildDetails'];let i = index">
+            
+    
+            <div class="product-item">
+                <div class="item-inner">
+                  <div class="product-thumbnail">
+                 
+                    
+                    <a (click)="ProductClick(subItemDet.ProductOptionID,subItemDet.ProductID,subItemDet.ProductImage)" class="product-item-photo" style="cursor: pointer;"> 
+                     <img class="product-image-photo" src={{ImagePath+subItemDet.ProductImage}} alt="" style="width: 408px;
+                      height: 252px;"></a>  </div>
+                  <div class="pro-box-info">
+                    <div class="item-info">
+                      <div class="info-inner">
+                        <div class="item-title">  <a   (click)="ProductClick(subItemDet.ProductOptionID,subItemDet.ProductID,subItemDet.ProductImage)" style="cursor: pointer;">{{subItemDet.ProductName}}   </a>  </div>
+                       
+                      </div>
+                    </div>
+                    <div class="box-hover">
+                      <div class="product-item-actions">
+                        <div class="pro-actions">
+                          <button class="action add-to-cart" type="button" title="Shop Now" (click)="ProductClick(subItemDet.ProductOptionID,subItemDet.ProductID,subItemDet.ProductImage)" style="cursor: pointer;">  <span>Shop Now </span>  </button>
+                        </div>
+                        
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+          </div>
+    </owl-carousel>
+    </div>
+       
+    
+    
+    </div>
+    </div> -->
+        </div>
+    </div>
+    <div class="col-md-2 mx-auto">
+        <div *ngFor="let d of lstHomeScreanSettings;">
+            <div class="row" *ngIf="d.Region=='right'">
+                <div class="col-md-12">
+                    <owl-carousel [options]="{items: 1, dots: false, navigation: false,autoplay:true,loop:true}" [items]="d['Child']" [carouselClasses]="['owl-theme', 'sliding']">
+                        <div *ngFor="let subItem of d['Child'];"> <img src={{ImagePath+subItem.Image}} (click)="ProductDetByType(d.LayoutViewType,subItem.LayoutViewID,subItem.Title,subItem.Image)" style="width: 100%;padding-right: 15px;padding-left: 15px;cursor: pointer;"> </div>
+                    </owl-carousel>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row" *ngIf="(isHomeScreenContainsLeftRegion && !isHomeScreenContainsRightRegion )">
+    <div class="col-md-2 mx-auto">
+        <div *ngFor="let d of lstHomeScreanSettings;">
+            <div class="row" *ngIf="d.Region=='Left'">
+                <div class="col-md-12">
+                    <owl-carousel [options]="{items: 1, dots: false, navigation: false,autoplay:true,loop:true}" [items]="d['Child']" [carouselClasses]="['owl-theme', 'sliding']">
+                        <div *ngFor="let subItem of d['Child'];"> <img src={{ImagePath+subItem.Image}} (click)="ProductDetByType(d.LayoutViewType,subItem.LayoutViewID,subItem.Title,subItem.Image)" style="width: 100%;padding-right: 15px;padding-left: 15px;cursor: pointer;"> </div>
+                    </owl-carousel>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-10 mx-auto">
+        <div *ngFor="let d of lstHomeScreanSettings;">
+            <div class="row" *ngIf="d.Region=='Center' ">
+                <div [class]="'col-md-12 '" *ngIf="d.LayoutOrientation=='Multi View Sliding' && d.LayoutViewType!='FlashMassage'  && d.LayoutViewType!='Category' && d.LayoutViewType!='Product' " style="margin-bottom: 4px;">
+                    <owl-carousel [options]="{items:d.ItemsToShow , dots: false, navigation: false,autoplay:true,loop:true}" [items]="d['Child']" [carouselClasses]="['owl-theme', 'sliding']">
+                        <div class="brand__logo--section  section--padding  " *ngFor="let subItem of d['Child'];let i = index">
+                            <div class="brand__logo--section__inner d-flex justify-content-center align-items-center">
+                                <div class="brand__logo--items"> <a (click)="ProductDetByType(d.LayoutViewType,subItem.LayoutViewID,subItem.Title,subItem.Image)" class="product-item-photo"> <img class="product-image-photo" src={{ImagePath+subItem.Image}} alt="" style="cursor: pointer;"></a> </div>
+                            </div>
+                        </div>
+                    </owl-carousel>
+                </div>
+                <div [class]="'col-md-12 '" *ngIf="d.LayoutOrientation=='Multi View Sliding' && d.LayoutViewType!='FlashMassage'  && d.LayoutViewType=='Category'">
+                    <div *ngFor="let subItem of d['Child']" class="related-product-area">
+                        <div class="page-header" style="margin-bottom: 25px;">
+                            <h3 class="name">{{subItem.Title}} </h3>
+                        </div>
+                        <owl-carousel [options]="{items: d.ItemsToShow, dots: false, navigation: false,autoplay:true,loop:true}" [items]="subItem['ChildDetails']" [carouselClasses]="['owl-theme', 'sliding']">
+                            <div class="item" *ngFor="let subItemDet of subItem['ChildDetails'];let i = index">
+                                <div class="product-item">
+                                    <div class="item-inner">
+                                        <div class="product-thumbnail"> <a (click)="ProductClick(subItemDet.ProductOptionID,subItemDet.ProductID,subItemDet.ProductImage)" class="product-item-photo" style="cursor: pointer;"> <img class="product-image-photo" src={{ImagePath+subItemDet.ProductImage}} alt="" style="width: 408px;
+                              height: 252px;"></a> </div>
+                                        <div class="pro-box-info">
+                                            <div class="item-info">
+                                                <div class="info-inner">
+                                                    <div class="item-title"> <a (click)="ProductClick(subItemDet.ProductOptionID,subItemDet.ProductID,subItemDet.ProductImage)" style="cursor: pointer;">{{subItemDet.ProductName}} </a> </div>
+                                                </div>
+                                            </div>
+                                            <div class="box-hover">
+                                                <div class="product-item-actions">
+                                                    <div class="pro-actions"> <button class="action add-to-cart" type="button" title="Shop Now" (click)="ProductClick(subItemDet.ProductOptionID,subItemDet.ProductID,subItemDet.ProductImage)" style="cursor: pointer;"> <span>Shop Now </span> </button> </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </owl-carousel>
+                    </div>
+                </div>
+                <div [class]="'col-md-12 '" *ngIf="d.LayoutViewType=='FlashMassage'">
+                    <p>
+                        <marquee style="
+                    font-size: 22px;
+                    margin-top: 10px;
+                    margin-bottom: -20px;
+                    background: #3B9BF2;
+                    padding: 10px;
+                    color: white;">{{d.SubTiltle}}</marquee>
+                    </p>
+                </div>
+                <div [class]="'col-md-12 mt-3'" *ngIf="d.LayoutOrientation=='Horizontal' && d['Child'].length>0">
+                    <section *ngFor="let subItem of d['Child'];let i = index" style="background: #e3c59d30;">
+                        <div class="row ">
+                            <div class="col-md-12"> <a [href]="subItem.Subtitle" class="w-100"> <img src={{ImagePath+subItem.Image}} alt="" class="w-100"> </a></div>
+                        </div>
+                    </section>
+                </div>
+                <div class="row" *ngIf="d.LayoutViewType!='Category'   &&  d.LayoutViewType!='FlashMassage'  && d.LayoutOrientation!='Horizontal'    &&  d.LayoutOrientation!='Multi View Sliding' ">
+                    <div *ngFor="let subItem of d['Child']" [attr.class]="(d.LayoutOrientation=='Two Box Layout' ? 'col-md-6 mx-auto' : (d.LayoutOrientation=='Three Box Layout' ? 'col-md-4 mx-auto':(
+                    
+                    
+                                  (d.LayoutOrientation=='Four Box Layout' ? 'col-md-3 mx-auto':'col-md-12 mx-auto')
+                    
+                              )))">
+                        <div *ngIf="subItem.Title!='' "> <a (click)="ProductDetByType(d.LayoutViewType,subItem.LayoutViewID,subItem.Title,subItem.Image)" style="cursor: pointer;"><img class="img-respo " alt="jtv-subbanner1" src={{ImagePath+subItem.Image}} style="width:510px;height: 315px;border: 3px solid white;"></a>
+                            <div class="product__items--content text-center">
+                                <div class="product__items--price" *ngIf="subItem.Title!=''"><a>{{subItem.Title}}</a></div>
+                                <div class="product__items--content__title h4" *ngIf="subItem.Subtitle!=''"><a>{{subItem.Subtitle}}</a></div>
+                                <div class="variant__buy--now__btn primary__btn outline"><a (click)="ProductDetByType(d.LayoutViewType,subItem.LayoutViewID,subItem.Title,subItem.Image)" style="cursor: pointer;">Shop Now</a></div> <br>
+                            </div>
+                        </div> <img *ngIf="subItem.Title==''" src={{ImagePath+subItem.Image}} class="img-responsive" width="100%">
+                    </div>
+                </div>
+                <div *ngIf="d.LayoutViewType=='Category'       &&  d.LayoutOrientation!='Multi View Sliding' ">
+                    <div class="row" *ngFor="let subItem of d['Child']" style="margin-bottom: -25px;">
+                        <div class="col-md-12" style="margin-top: 10px ;margin-bottom: 25px;">
+                            <h3 *ngIf="subItem.Title!='' && (+d.ShowTitle)==1" class="name">{{subItem.Title}}</h3>
+                        </div>
+                        <div class="row" style="display: table;">
+                            <div class="col-xl-12 col-lg-12">
+                                <div class="shop__product--wrapper">
+                                    <div class="tab_content">
+                                        <div id="product_grid" class="tab_pane active show">
+                                            <div class="product__section--inner product__grid--inner">
+                                                <div class="row row-cols-xl-5 row-cols-lg-4 row-cols-md-3 row-cols-2 mb--n30">
+                                                    <div *ngFor="let subItemDet of subItem['ChildDetails']" [attr.class]="(d.LayoutOrientation=='Two Box Layout' ? 'col-md-6  mx-auto ' : (d.LayoutOrientation=='Three Box Layout' ? 'col-md-4  mx-auto':(
+                    
+                    
+                                  (d.LayoutOrientation=='Four Box Layout' ? 'col-md-3  mx-auto':'col-md-12' )
+                    
+                              )))" class="col mb-30" style="display:table-cell;">
+                                                        <div (mouseover)="hover=true;productMouseOverCall(subItemDet.ProductID)" (mouseleave)="hover=false" [class]="hover==true  ? 'product__items user-profile' : 'product__items'">
+                                                            <div class="product__items--thumbnail figure"> <a class="product__items--link" href="product-details.html"> <img class="product__items--img product__primary--img" src={{ImagePath+subItemDet.ProductImage}} alt="product-img"> <img class="product__items--img product__secondary--img" src={{ImagePath+subItemDet.ProductImage}} alt="product-img"> </a> </div>
+                                                            <div class="css-popover bg__black " [style.z-index]="hover==true  ? 9 : 0">
+                                                                <div class="row">
+                                                                    <div class="col-md-12 mb-4">
+                                                                        <p class="product-desc text-white">{{subItemDet.ProductShortDesc!=''?subItemDet.ProductShortDesc:subItemDet.ProductName}}</p>
+                                                                    </div> <span *ngFor="let o of selectedProductOptions">
+                                                                        <!-- <div class="col-md-5">
+                                                                            <strong class="text-white">{{o.Name}}</strong>
+                                                                        </div> -->
+                                                                        <div class="col-md-12">
+                                                                            <ul class="text-white">
+                                                                                <li><strong class="text-white">{{o.Name}}</strong>: {{o.Options}}</li>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </span>
+                                                                    <div class="col-md-12 mt-4">
+                                                                        <h4 class="text-white"><a href="product-detail.html">QUICK VIEW</a></h4>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="product__items--content text-center"> <strong class="text-muted">{{subItemDet.ProductName}}</strong>
+                                                                <h3 class="product__items--content__title h4"><a href="product-details.html">Checks Shirt</a></h3>
+                                                                <div class="product__items--price"> <span class="current__price" *ngIf="subItemDet.SalesPrice!=''">{{subItemDet.SalesPrice | currency:Currency}}</span> <span class="current__price" *ngIf="subItemDet.Price!='' && (+subItemDet.SalesPrice) != (+subItemDet.Price)">{{subItemDet.Price| currency:Currency}}</span> </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div   *ngFor="let subItemDet of subItem['ChildDetails']" [attr.class]="(d.LayoutOrientation=='Two Box Layout' ? 'col-md-6  mx-auto ' : (d.LayoutOrientation=='Three Box Layout' ? 'col-md-4  mx-auto':(
+                    
+                    
+                                  (d.LayoutOrientation=='Four Box Layout' ? 'col-md-3  mx-auto':'col-md-12' )
+                    
+                              )))">
+                                  
+                                  
+                                  
+                                    <a (click)="ProductClick(subItemDet.ProductOptionID,subItemDet.ProductID,subItemDet.ProductImage)" style="cursor: pointer;"><img class="img-respo " alt="jtv-subbanner1" src={{ImagePath+subItemDet.ProductImage}}  style="margin-bottom: 0;width:510px;height: 315px;border: 3px solid white;"></a>
+                                  <div class="product__items--content text-center">
+                                    <div class="product__items--price" *ngIf="subItemDet.SalesPrice!=''"><a >{{subItemDet.SalesPrice| currency:Currency}} <span *ngIf="subItemDet.Price!='' && (+subItemDet.SalesPrice) != (+subItemDet.Price)" class="price" style='text-decoration:line-through'> {{subItemDet.Price| currency:Currency}}  </span>  </a></div>
+                    
+                                 
+                                     
+                    
+                    
+                                    <div class="product__items--content__title h4" *ngIf="subItemDet.ProductName!=''" ><a >{{subItemDet.ProductName}}</a></div>
+                                    <div class="variant__buy--now__btn primary__btn outline"><a (click)="ProductClick(subItemDet.ProductOptionID,subItemDet.ProductID,subItemDet.ProductImage)" style="cursor: pointer;">Shop Now</a></div>
+                                    <br>
+                                  </div>
+                                </div> -->
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="row" *ngIf="d.Region=='Center'">
+            <div [class]=" 'col-md-12 '"      *ngIf="d.LayoutOrientation=='Multi View Sliding'  && ( d.Region=='Center' ) && d.LayoutViewType!='Category' && d.LayoutViewType!='Product' "
+            
+            style="margin-bottom: 4px;"  >
+                         
+               
+        
+                <owl-carousel 
+                [options]="{items:d.ItemsToShow , dots: false, navigation: false,autoplay:true,loop:true}"
+                
+                [items]="d['Child']"
+                
+                [carouselClasses]="['owl-theme', 'sliding']">
+               
+            
+                <div  class="brand__logo--section bg__secondary section--padding color-scheme-1 "  *ngFor="let subItem of d['Child'];let i = index">
+                    
+            
+                    <div class="brand__logo--section__inner d-flex justify-content-center align-items-center">
+                        <div class="brand__logo--items">
+                         
+                         
+                            
+                            <a (click)="ProductDetByType(d.LayoutViewType,subItem.LayoutViewID,subItem.Title,subItem.Image)"  class="product-item-photo">  <img class="product-image-photo" src={{ImagePath+subItem.Image}} alt="" style="cursor: pointer;"></a> 
+                              
+                         
+                        </div>
+                      </div>
+                  </div>
+            </owl-carousel>
+        
+        
+               
+        
+          
+        </div>
+        
+        
+        <div  [class]="'col-md-12 '"   *ngIf="d.LayoutOrientation=='Multi View Sliding'  && ( d.Region=='Center' ) && d.LayoutViewType=='Category'"  >
+            
+            <div *ngFor="let subItem of d['Child']"   class="related-product-area">
+                <div class="page-header" style="margin-bottom: 25px;">
+                  <h3 class="name">{{subItem.Title}}    </h3>
+                </div>
+                
+            <owl-carousel 
+            [options]="{items: d.ItemsToShow, dots: false, navigation: false,autoplay:true,loop:true}"
+            
+            [items]="subItem['ChildDetails']"
+            
+            [carouselClasses]="['owl-theme', 'sliding']">
+           
+        
+            <div class="item" *ngFor="let subItemDet of subItem['ChildDetails'];let i = index">
+                
+        
+                <div class="product-item">
+                    <div class="item-inner">
+                      <div class="product-thumbnail">
+                     
+                        
+                        <a (click)="ProductClick(subItemDet.ProductOptionID,subItemDet.ProductID,subItemDet.ProductImage)" class="product-item-photo" style="cursor: pointer;"> 
+                         <img class="product-image-photo" src={{ImagePath+subItemDet.ProductImage}} alt="" style="width: 408px;
+                          height: 252px;"></a>  </div>
+                      <div class="pro-box-info">
+                        <div class="item-info">
+                          <div class="info-inner">
+                            <div class="item-title">  <a   (click)="ProductClick(subItemDet.ProductOptionID,subItemDet.ProductID,subItemDet.ProductImage)" style="cursor: pointer;">{{subItemDet.ProductName}}   </a>  </div>
+                           
+                          </div>
+                        </div>
+                        <div class="box-hover">
+                          <div class="product-item-actions">
+                            <div class="pro-actions">
+                              <button class="action add-to-cart" type="button" title="Shop Now" (click)="ProductClick(subItemDet.ProductOptionID,subItemDet.ProductID,subItemDet.ProductImage)" style="cursor: pointer;">  <span>Shop Now </span>  </button>
+                            </div>
+                            
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+        </owl-carousel>
+        </div>
+           
+        
+        
+        </div>
+        </div> -->
+        </div>
+    </div>
+</div>
+<div class="row" *ngIf="(!isHomeScreenContainsLeftRegion && isHomeScreenContainsRightRegion )">
+    <div class="col-md-10 mx-auto">
+        <div *ngFor="let d of lstHomeScreanSettings;">
+            <div class="row" *ngIf="d.Region=='Center' ">
+                <div [class]="'col-md-12 '" *ngIf="d.LayoutOrientation=='Multi View Sliding' && d.LayoutViewType!='FlashMassage'  && d.LayoutViewType!='Category' && d.LayoutViewType!='Product' " style="margin-bottom: 4px;">
+                    <owl-carousel [options]="{items:d.ItemsToShow , dots: false, navigation: false,autoplay:true,loop:true}" [items]="d['Child']" [carouselClasses]="['owl-theme', 'sliding']">
+                        <div class="brand__logo--section section--padding  " *ngFor="let subItem of d['Child'];let i = index">
+                            <div class="brand__logo--section__inner d-flex justify-content-center align-items-center">
+                                <div class="brand__logo--items"> <a (click)="ProductDetByType(d.LayoutViewType,subItem.LayoutViewID,subItem.Title,subItem.Image)" class="product-item-photo"> <img class="product-image-photo" src={{ImagePath+subItem.Image}} alt="" style="cursor: pointer;"></a> </div>
+                            </div>
+                        </div>
+                    </owl-carousel>
+                </div>
+                <div [class]="'col-md-12 '" *ngIf="d.LayoutOrientation=='Multi View Sliding' && d.LayoutViewType!='FlashMassage'  && d.LayoutViewType=='Category'">
+                    <div *ngFor="let subItem of d['Child']" class="related-product-area">
+                        <div class="page-header" style="margin-bottom: 25px;">
+                            <h3 class="name">{{subItem.Title}} </h3>
+                        </div>
+                        <owl-carousel [options]="{items: d.ItemsToShow, dots: false, navigation: false,autoplay:true,loop:true}" [items]="subItem['ChildDetails']" [carouselClasses]="['owl-theme', 'sliding']">
+                            <div class="item" *ngFor="let subItemDet of subItem['ChildDetails'];let i = index">
+                                <div class="product-item">
+                                    <div class="item-inner">
+                                        <div class="product-thumbnail"> <a (click)="ProductClick(subItemDet.ProductOptionID,subItemDet.ProductID,subItemDet.ProductImage)" class="product-item-photo" style="cursor: pointer;"> <img class="product-image-photo" src={{ImagePath+subItemDet.ProductImage}} alt="" style="width: 408px;
+                                  height: 252px;"></a> </div>
+                                        <div class="pro-box-info">
+                                            <div class="item-info">
+                                                <div class="info-inner">
+                                                    <div class="item-title"> <a (click)="ProductClick(subItemDet.ProductOptionID,subItemDet.ProductID,subItemDet.ProductImage)" style="cursor: pointer;">{{subItemDet.ProductName}} </a> </div>
+                                                </div>
+                                            </div>
+                                            <div class="box-hover">
+                                                <div class="product-item-actions">
+                                                    <div class="pro-actions"> <button class="action add-to-cart" type="button" title="Shop Now" (click)="ProductClick(subItemDet.ProductOptionID,subItemDet.ProductID,subItemDet.ProductImage)" style="cursor: pointer;"> <span>Shop Now </span> </button> </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </owl-carousel>
+                    </div>
+                </div>
+                <div [class]="'col-md-12 '" *ngIf="d.LayoutViewType=='FlashMassage'">
+                    <p>
+                        <marquee style="
+                        font-size: 22px;
+                        margin-top: 10px;
+                        margin-bottom: -20px;
+                        background: #3B9BF2;
+                        padding: 10px;
+                        color: white;">{{d.SubTiltle}}</marquee>
+                    </p>
+                </div>
+                <div [class]="'col-md-12 mt-3'" *ngIf="d.LayoutOrientation=='Horizontal' && d['Child'].length>0">
+                    <section *ngFor="let subItem of d['Child'];let i = index" style="background: #e3c59d30;">
+                        <div class="row ">
+                            <div class="col-md-12"> <a [href]="subItem.Subtitle" class="w-100"> <img src={{ImagePath+subItem.Image}} alt="" class="w-100"> </a></div>
+                        </div>
+                    </section>
+                </div>
+                <div class="row" *ngIf="d.LayoutViewType!='Category'   &&  d.LayoutViewType!='FlashMassage'  && d.LayoutOrientation!='Horizontal'    &&  d.LayoutOrientation!='Multi View Sliding' ">
+                    <div *ngFor="let subItem of d['Child']" [attr.class]="(d.LayoutOrientation=='Two Box Layout' ? 'col-md-6 mx-auto' : (d.LayoutOrientation=='Three Box Layout' ? 'col-md-4 mx-auto':(
+                        
+                        
+                                      (d.LayoutOrientation=='Four Box Layout' ? 'col-md-3 mx-auto':'col-md-12 mx-auto')
+                        
+                                  )))">
+                        <div *ngIf="subItem.Title!=''  "> <a (click)="ProductDetByType(d.LayoutViewType,subItem.LayoutViewID,subItem.Title,subItem.Image)" style="cursor: pointer;"><img class="img-respo " alt="jtv-subbanner1" src={{ImagePath+subItem.Image}} style="width:510px;height: 315px;border: 3px solid white;"></a>
+                            <div class="product__items--content text-center">
+                                <div class="product__items--price" *ngIf="subItem.Title!=''"><a>{{subItem.Title}}</a></div>
+                                <div class="product__items--content__title h4" *ngIf="subItem.Subtitle!=''"><a>{{subItem.Subtitle}}</a></div>
+                                <div class="variant__buy--now__btn primary__btn outline"><a (click)="ProductDetByType(d.LayoutViewType,subItem.LayoutViewID,subItem.Title,subItem.Image)" style="cursor: pointer;">Shop Now</a></div> <br>
+                            </div>
+                        </div> <img *ngIf="subItem.Title==''" src={{ImagePath+subItem.Image}} class="img-responsive" width="100%">
+                    </div>
+                </div>
+                <div *ngIf="d.LayoutViewType=='Category'       &&  d.LayoutOrientation!='Multi View Sliding' ">
+                    <div class="row" *ngFor="let subItem of d['Child']" style="margin-bottom: -25px;">
+                        <div class="col-md-12" style="margin-top: 10px ;margin-bottom: 25px;">
+                            <h3 *ngIf="subItem.Title!='' && (+d.ShowTitle)==1" class="name">{{subItem.Title}}</h3>
+                        </div>
+                        <div class="row" style="display: table;">
+                            <div class="col-xl-12 col-lg-12">
+                                <div class="shop__product--wrapper">
+                                    <div class="tab_content">
+                                        <div id="product_grid" class="tab_pane active show">
+                                            <div class="product__section--inner product__grid--inner">
+                                                <div class="row row-cols-xl-5 row-cols-lg-4 row-cols-md-3 row-cols-2 mb--n30">
+                                                    <div *ngFor="let subItemDet of subItem['ChildDetails']" [attr.class]="(d.LayoutOrientation=='Two Box Layout' ? 'col-md-6  mx-auto ' : (d.LayoutOrientation=='Three Box Layout' ? 'col-md-4  mx-auto':(
+                        
+                        
+                                      (d.LayoutOrientation=='Four Box Layout' ? 'col-md-3  mx-auto':'col-md-12' )
+                        
+                                  )))" class="col mb-30" style="display:table-cell;">
+                                                        <div (mouseover)="hover=true;productMouseOverCall(subItemDet.ProductID)" (mouseleave)="hover=false" [class]="hover==true  ? 'product__items user-profile' : 'product__items'">
+                                                            <div class="product__items--thumbnail figure"> <a class="product__items--link" href="product-details.html"> <img class="product__items--img product__primary--img" src={{ImagePath+subItemDet.ProductImage}} alt="product-img"> <img class="product__items--img product__secondary--img" src={{ImagePath+subItemDet.ProductImage}} alt="product-img"> </a> </div>
+                                                            <div class="css-popover bg__black " [style.z-index]="hover==true  ? 9 : 0">
+                                                                <div class="row">
+                                                                    <div class="col-md-12 mb-4">
+                                                                        <p class="product-desc text-white">{{subItemDet.ProductShortDesc!=''?subItemDet.ProductShortDesc:subItemDet.ProductName}}</p>
+                                                                    </div> <span *ngFor="let o of selectedProductOptions">
+                                                                        <!-- <div class="col-md-5">
+                                                                                <strong class="text-white">{{o.Name}}</strong>
+                                                                            </div> -->
+                                                                        <div class="col-md-12">
+                                                                            <ul class="text-white">
+                                                                                <li><strong class="text-white">{{o.Name}}</strong>: {{o.Options}}</li>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </span>
+                                                                    <div class="col-md-12 mt-4">
+                                                                        <h4 class="text-white"><a href="product-detail.html">QUICK VIEW</a></h4>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="product__items--content text-center"> <strong class="text-muted">{{subItemDet.ProductName}}</strong>
+                                                                <h3 class="product__items--content__title h4"><a href="product-details.html">Checks Shirt</a></h3>
+                                                                <div class="product__items--price"> <span class="current__price" *ngIf="subItemDet.SalesPrice!=''">{{subItemDet.SalesPrice | currency:Currency}}</span> <span class="current__price" *ngIf="subItemDet.Price!='' && (+subItemDet.SalesPrice) != (+subItemDet.Price)">{{subItemDet.Price| currency:Currency}}</span> </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div   *ngFor="let subItemDet of subItem['ChildDetails']" [attr.class]="(d.LayoutOrientation=='Two Box Layout' ? 'col-md-6  mx-auto ' : (d.LayoutOrientation=='Three Box Layout' ? 'col-md-4  mx-auto':(
+                        
+                        
+                                      (d.LayoutOrientation=='Four Box Layout' ? 'col-md-3  mx-auto':'col-md-12' )
+                        
+                                  )))">
+                                      
+                                      
+                                      
+                                        <a (click)="ProductClick(subItemDet.ProductOptionID,subItemDet.ProductID,subItemDet.ProductImage)" style="cursor: pointer;"><img class="img-respo " alt="jtv-subbanner1" src={{ImagePath+subItemDet.ProductImage}}  style="margin-bottom: 0;width:510px;height: 315px;border: 3px solid white;"></a>
+                                      <div class="product__items--content text-center">
+                                        <div class="product__items--price" *ngIf="subItemDet.SalesPrice!=''"><a >{{subItemDet.SalesPrice| currency:Currency}} <span *ngIf="subItemDet.Price!='' && (+subItemDet.SalesPrice) != (+subItemDet.Price)" class="price" style='text-decoration:line-through'> {{subItemDet.Price| currency:Currency}}  </span>  </a></div>
+                        
+                                     
+                                         
+                        
+                        
+                                        <div class="product__items--content__title h4" *ngIf="subItemDet.ProductName!=''" ><a >{{subItemDet.ProductName}}</a></div>
+                                        <div class="variant__buy--now__btn primary__btn outline"><a (click)="ProductClick(subItemDet.ProductOptionID,subItemDet.ProductID,subItemDet.ProductImage)" style="cursor: pointer;">Shop Now</a></div>
+                                        <br>
+                                      </div>
+                                    </div> -->
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="row" *ngIf="d.Region=='Center'">
+                <div [class]=" 'col-md-12 '"      *ngIf="d.LayoutOrientation=='Multi View Sliding'  && ( d.Region=='Center' ) && d.LayoutViewType!='Category' && d.LayoutViewType!='Product' "
+                
+                style="margin-bottom: 4px;"  >
+                             
+                   
+            
+                    <owl-carousel 
+                    [options]="{items:d.ItemsToShow , dots: false, navigation: false,autoplay:true,loop:true}"
+                    
+                    [items]="d['Child']"
+                    
+                    [carouselClasses]="['owl-theme', 'sliding']">
+                   
+                
+                    <div  class="brand__logo--section bg__secondary section--padding color-scheme-1 "  *ngFor="let subItem of d['Child'];let i = index">
+                        
+                
+                        <div class="brand__logo--section__inner d-flex justify-content-center align-items-center">
+                            <div class="brand__logo--items">
+                             
+                             
+                                
+                                <a (click)="ProductDetByType(d.LayoutViewType,subItem.LayoutViewID,subItem.Title,subItem.Image)"  class="product-item-photo">  <img class="product-image-photo" src={{ImagePath+subItem.Image}} alt="" style="cursor: pointer;"></a> 
+                                  
+                             
+                            </div>
+                          </div>
+                      </div>
+                </owl-carousel>
+            
+            
+                   
+            
+              
+            </div>
+            
+            
+            <div  [class]="'col-md-12 '"   *ngIf="d.LayoutOrientation=='Multi View Sliding'  && ( d.Region=='Center' ) && d.LayoutViewType=='Category'"  >
+                
+                <div *ngFor="let subItem of d['Child']"   class="related-product-area">
+                    <div class="page-header" style="margin-bottom: 25px;">
+                      <h3 class="name">{{subItem.Title}}    </h3>
+                    </div>
+                    
+                <owl-carousel 
+                [options]="{items: d.ItemsToShow, dots: false, navigation: false,autoplay:true,loop:true}"
+                
+                [items]="subItem['ChildDetails']"
+                
+                [carouselClasses]="['owl-theme', 'sliding']">
+               
+            
+                <div class="item" *ngFor="let subItemDet of subItem['ChildDetails'];let i = index">
+                    
+            
+                    <div class="product-item">
+                        <div class="item-inner">
+                          <div class="product-thumbnail">
+                         
+                            
+                            <a (click)="ProductClick(subItemDet.ProductOptionID,subItemDet.ProductID,subItemDet.ProductImage)" class="product-item-photo" style="cursor: pointer;"> 
+                             <img class="product-image-photo" src={{ImagePath+subItemDet.ProductImage}} alt="" style="width: 408px;
+                              height: 252px;"></a>  </div>
+                          <div class="pro-box-info">
+                            <div class="item-info">
+                              <div class="info-inner">
+                                <div class="item-title">  <a   (click)="ProductClick(subItemDet.ProductOptionID,subItemDet.ProductID,subItemDet.ProductImage)" style="cursor: pointer;">{{subItemDet.ProductName}}   </a>  </div>
+                               
+                              </div>
+                            </div>
+                            <div class="box-hover">
+                              <div class="product-item-actions">
+                                <div class="pro-actions">
+                                  <button class="action add-to-cart" type="button" title="Shop Now" (click)="ProductClick(subItemDet.ProductOptionID,subItemDet.ProductID,subItemDet.ProductImage)" style="cursor: pointer;">  <span>Shop Now </span>  </button>
+                                </div>
+                                
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                  </div>
+            </owl-carousel>
+            </div>
+               
+            
+            
+            </div>
+            </div> -->
+        </div>
+    </div>
+    <div class="col-md-2 mx-auto">
+        <div *ngFor="let d of lstHomeScreanSettings;">
+            <div class="row" *ngIf="d.Region=='right'">
+                <div class="col-md-12">
+                    <owl-carousel [options]="{items: 1, dots: false, navigation: false,autoplay:true,loop:true}" [items]="d['Child']" [carouselClasses]="['owl-theme', 'sliding']">
+                        <div *ngFor="let subItem of d['Child'];"> <img src={{ImagePath+subItem.Image}} (click)="ProductDetByType(d.LayoutViewType,subItem.LayoutViewID,subItem.Title,subItem.Image)" style="width: 100%;padding-right: 15px;padding-left: 15px;cursor: pointer;"> </div>
+                    </owl-carousel>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 
+
+<aside>
+<div  *ngFor="let d of lstHomeScreanSettings;">
+    <div class="row">
+   <div class="col-md-2" *ngIf="isHomeScreenContainsLeftRegion">
+
+<div class="row">
+
+
+    <div class="col-md-12">
+
+        <owl-carousel  
+        [options]="{items: 1, dots: false, navigation: false,autoplay:true,loop:true}"
+        
+        [items]="d['Child']"
+        
+        [carouselClasses]="['owl-theme', 'sliding']">
+        <div  *ngFor="let subItem of d['Child'];" 
+        >  <img src={{ImagePath+subItem.Image}} 
+        
+        (click)="ProductDetByType(d.LayoutViewType,subItem.LayoutViewID,subItem.Title,subItem.Image)" style="width: 100%;padding-right: 15px;padding-left: 15px;cursor: pointer;">
+         
+        </div>
+
+
+      
+         
+      
+      </owl-carousel>
+   
+
+    </div>
+</div>
+
+   </div>
+</div>
+</div>
+
+</aside>
+   <div *ngFor="let d of lstHomeScreanSettings;" [class]="(isHomeScreenContainsLeftRegion && isHomeScreenContainsRightRegion )?'col-md-8  mx-auto' :((isHomeScreenContainsLeftRegion || isHomeScreenContainsRightRegion )?'col-md-10  mx-auto':'col-md-12')">
+    <div class="row" *ngIf="d.Region=='Center'">
+    <div [class]=" 'col-md-12 '"      *ngIf="d.LayoutOrientation=='Multi View Sliding'  && ( d.Region=='Center' ) && d.LayoutViewType!='Category' && d.LayoutViewType!='Product' "
+    
+    style="margin-bottom: 4px;"  >
+                 
+       
+
+        <owl-carousel 
+        [options]="{items:d.ItemsToShow , dots: false, navigation: false,autoplay:true,loop:true}"
+        
+        [items]="d['Child']"
+        
+        [carouselClasses]="['owl-theme', 'sliding']">
+       
+    
+        <div  class="brand__logo--section bg__secondary section--padding color-scheme-1 "  *ngFor="let subItem of d['Child'];let i = index">
+            
+    
+            <div class="brand__logo--section__inner d-flex justify-content-center align-items-center">
+                <div class="brand__logo--items">
+                 
+                 
+                    
+                    <a (click)="ProductDetByType(d.LayoutViewType,subItem.LayoutViewID,subItem.Title,subItem.Image)"  class="product-item-photo">  <img class="product-image-photo" src={{ImagePath+subItem.Image}} alt="" style="cursor: pointer;"></a> 
+                      
+                 
+                </div>
+              </div>
+          </div>
+    </owl-carousel>
+
+
+       
+
+  
+</div>
+
+
+<div  [class]="'col-md-12 '"   *ngIf="d.LayoutOrientation=='Multi View Sliding'  && ( d.Region=='Center' ) && d.LayoutViewType=='Category'"  >
+    
+    <div *ngFor="let subItem of d['Child']"   class="related-product-area">
+        <div class="page-header" style="margin-bottom: 25px;">
+          <h3 class="name">{{subItem.Title}}    </h3>
+        </div>
+        
+    <owl-carousel 
+    [options]="{items: d.ItemsToShow, dots: false, navigation: false,autoplay:true,loop:true}"
+    
+    [items]="subItem['ChildDetails']"
+    
+    [carouselClasses]="['owl-theme', 'sliding']">
+   
+
+    <div class="item" *ngFor="let subItemDet of subItem['ChildDetails'];let i = index">
+        
+
+        <div class="product-item">
+            <div class="item-inner">
+              <div class="product-thumbnail">
+             
+                
+                <a (click)="ProductClick(subItemDet.ProductOptionID,subItemDet.ProductID,subItemDet.ProductImage)" class="product-item-photo" style="cursor: pointer;"> 
+                 <img class="product-image-photo" src={{ImagePath+subItemDet.ProductImage}} alt="" style="width: 408px;
+                  height: 252px;"></a>  </div>
+              <div class="pro-box-info">
+                <div class="item-info">
+                  <div class="info-inner">
+                    <div class="item-title">  <a   (click)="ProductClick(subItemDet.ProductOptionID,subItemDet.ProductID,subItemDet.ProductImage)" style="cursor: pointer;">{{subItemDet.ProductName}}   </a>  </div>
+                   
+                  </div>
+                </div>
+                <div class="box-hover">
+                  <div class="product-item-actions">
+                    <div class="pro-actions">
+                      <button class="action add-to-cart" type="button" title="Shop Now" (click)="ProductClick(subItemDet.ProductOptionID,subItemDet.ProductID,subItemDet.ProductImage)" style="cursor: pointer;">  <span>Shop Now </span>  </button>
+                    </div>
+                    
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+</owl-carousel>
+</div>
+   
+
+
+</div>
+</div>
+</div>
+
+<div class="col-md-2" *ngIf="isHomeScreenContainsRightRegion">
+
+</div>
+
+   -->
+<!-- <div id="wowslider-container1" >
+
+  <div class="ws_images"><ul>
+                   <li><img src="assets/img/slider/slide1.jpg" id="wows1_0"/></li>
+                   <li><img src="assets/img/slider/slide2.jpg" id="wows1_1"/></li>
+                   <li><img src="assets/img/slider/slider3.jpg" alt="slideshow javascript" id="wows1_2"/></li>
+                   <li><img src="assets/img/slider/slider4.jpg" alt="slider4" id="wows1_3"/></li>
+               </ul></div> 
+
+
+
+
+           <div class="ws_script" style="position:absolute;left:-99%"><a href="http://wowslider.net">bootstrap image slider</a> by WOWSlider.com v9.0</div>
+           <div class="ws_shadow"></div>
+           </div>	
+     -->
+<!-- <div class="brand__logo--section bg__secondary section--padding color-scheme-1">
+           <div class="container-fluid">
+               <div class="row row-cols-1">
+                   <div class="col">
+                       <div class="brand__logo--section__inner d-flex justify-content-center align-items-center">
+                           <div class="brand__logo--items">
+                               <a href="product.html"><img class="brand__logo--items__thumbnail--img display-block" src="assets/img/logo/brand-logo1.png" alt="brand logo img"></a>
+                           </div>
+                           <div class="brand__logo--items">
+                               <a href="product.html"><img class="brand__logo--items__thumbnail--img display-block" src="assets/img/logo/brand-logo2.png" alt="brand logo img"></a>
+                           </div>
+                           <div class="brand__logo--items">
+                               <a href="product.html"><img class="brand__logo--items__thumbnail--img display-block" src="assets/img/logo/brand-logo3.png" alt="brand logo img"></a>
+                           </div>
+                           <div class="brand__logo--items">
+                               <a href="product.html"><img class="brand__logo--items__thumbnail--img display-block" src="assets/img/logo/brand-logo4.png" alt="brand logo img"></a>
+                           </div>
+                           <div class="brand__logo--items">
+                               <a href="product.html"><img class="brand__logo--items__thumbnail--img display-block" src="assets/img/logo/brand-logo5.png" alt="brand logo img"></a>
+                           </div>
+                           <div class="brand__logo--items">
+                               <a href="product.html"><img class="brand__logo--items__thumbnail--img display-block" src="assets/img/logo/brand-logo3.png" alt="brand logo img"></a>
+                           </div>
+                           <div class="brand__logo--items">
+                               <a href="product.html"><img class="brand__logo--items__thumbnail--img display-block" src="assets/img/logo/brand-logo4.png" alt="brand logo img"></a>
+                           </div>
+                       </div>
+                   </div>
+               </div>
+           </div>
+       </div> -->
+<section class="banner__section section--padding" style="background: #e3c59d30;">
+    <div class="container-fluid">
+        <div class="row ">
+            <!-- <div class="col-lg-5 col-md-order mb-28">
+                        <div class="banner__items">
+                            <a class="banner__items--thumbnail position__relative" href="shop.html"><img class="banner__items--thumbnail__img" src="assets/img/banner/banner1.png" alt="banner-img" />
+                                <div class="banner__items--content">
+                                    <span class="banner__items--content__subtitle">17% Discount </span>
+                                    <h2 class="banner__items--content__title h3">Spring Collection  <br />
+                                       Style To </h2>
+                                    <span class="banner__items--content__link">View Discounts
+                                        <svg class="banner__items--content__arrow--icon" xmlns="http://www.w3.org/2000/svg" width="20.2" height="12.2" viewbox="0 0 6.2 6.2">
+                                            <path d="M7.1,4l-.546.546L8.716,6.713H4v.775H8.716L6.554,9.654,7.1,10.2,9.233,8.067,10.2,7.1Z" transform="translate(-4 -4)" fill="currentColor"></path>
+                                        </svg>
+                                    </span>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-7 mb-28">
+                        <div class="row row-cols-lg-2 row-cols-sm-2 row-cols-1">
+                            <div class="col mb-28">
+                                <div class="banner__items">
+                                    <a class="banner__items--thumbnail position__relative" href="shop.html"><img class="banner__items--thumbnail__img" src="assets/img/banner/banner2.png" alt="banner-img" /> 
+                                        <div class="banner__items--content">
+                                            <span class="banner__items--content__subtitle text__secondary">Shop Women </span>
+                                            <h2 class="banner__items--content__title h3">Up to 70% Off &  <br />
+                                               Free ________ </h2>
+                                            <span class="banner__items--content__link">View Discounts
+                                                <svg class="banner__items--content__arrow--icon" xmlns="http://www.w3.org/2000/svg" width="20.2" height="12.2" viewbox="0 0 6.2 6.2">
+                                                    <path d="M7.1,4l-.546.546L8.716,6.713H4v.775H8.716L6.554,9.654,7.1,10.2,9.233,8.067,10.2,7.1Z" transform="translate(-4 -4)" fill="currentColor"></path>
+                                                </svg>
+                                            </span>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col mb-28">
+                                <div class="banner__items">
+                                    <a class="banner__items--thumbnail position__relative" href="shop.html"><img class="banner__items--thumbnail__img" src="assets/img/banner/banner3.png" alt="banner-img" /> 
+                                        <div class="banner__items--content">
+                                            <span class="banner__items--content__subtitle">Shop Women </span>
+                                            <h2 class="banner__items--content__title h3">Free Shipping Over  <br />
+                                               Order ₹ 120 </h2>
+                                            <span class="banner__items--content__link">View Discounts
+                                                <svg class="banner__items--content__arrow--icon" xmlns="http://www.w3.org/2000/svg" width="20.2" height="12.2" viewbox="0 0 6.2 6.2">
+                                                    <path d="M7.1,4l-.546.546L8.716,6.713H4v.775H8.716L6.554,9.654,7.1,10.2,9.233,8.067,10.2,7.1Z" transform="translate(-4 -4)" fill="currentColor"></path>
+                                                </svg>
+                                            </span>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="banner__items">
+                            <a class="banner__items--thumbnail position__relative" href="shop.html"><img class="banner__items--thumbnail__img banner__img--max__height" src="assets/img/banner/banner4.png" alt="banner-img" /> 
+                                <div class="banner__items--content">
+                                    <span class="banner__items--content__subtitle">25% Discount </span>
+                                    <h2 class="banner__items--content__title h3">Leather Saddle  <br />
+                                       Bag Style </h2>
+                                    <span class="banner__items--content__link">View Discounts
+                                        <svg class="banner__items--content__arrow--icon" xmlns="http://www.w3.org/2000/svg" width="20.2" height="12.2" viewbox="0 0 6.2 6.2">
+                                            <path d="M7.1,4l-.546.546L8.716,6.713H4v.775H8.716L6.554,9.654,7.1,10.2,9.233,8.067,10.2,7.1Z" transform="translate(-4 -4)" fill="currentColor"></path>
+                                        </svg>
+                                    </span>
+                                </div>
+                            </a>
+                        </div>
+                    </div> -->
+            <div class="col-md-12"> <a href="menu.html" class="w-100"><img src="assets/img/slider/slide2.jpg" alt="" class="w-100"></a> </div>
+            <div class="col-md-12"> <a href="menu.html" class="w-100"><img src="assets/img/slider/slider4.jpg" alt="" class="w-100"></a> </div>
+            <div class="col-md-12"> <img src="assets/img/slider/slide1.jpg" alt="" class="w-100"> </div>
+            <div class="col-md-12"> <img src="assets/img/slider/slider3.jpg" alt="" class="w-100"> </div>
+        </div>
+    </div>
+</section>
+<section class="product__section section--padding pt-0 mt-5">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 ">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row p-3">
+                            <div class="col-md-12">
+                                <div class="section__heading text-left">
+                                    <h2>Shop Products By Brand </h2>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="row">
+                                    <!-- <div class="col-md-4 col-12 m-auto">
+                                               <label for="">Select Brand </label>
+                                           </div> -->
+                                    <div class="col-md-12 col-12"> <label class="mb-3">Select Brand </label> <select name="" id="" class="form-control">
+                                            <option value="Brand1">Brand 1</option>
+                                            <option value="Brand2">Brand 2</option>
+                                            <option value="Brand1">Brand 3</option>
+                                            <option value="Brand1">Brand 4</option>
+                                            <option value="Brand1">Brand 5</option>
+                                        </select> </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="row">
+                                    <!-- <div class="col-md-4 col-12 m-auto">
+                                               <label for="">Select Category </label>
+                                           </div> -->
+                                    <div class="col-md-12 col-12"> <label class="mb-3">Select Category </label> <select name="" id="" class="form-control">
+                                            <option value="Category1">Category 1</option>
+                                            <option value="Category2">Category 2</option>
+                                            <option value="Category1">Category 3</option>
+                                            <option value="Category1">Category 4</option>
+                                            <option value="Category1">Category 5</option>
+                                        </select> </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4"> <label class="mb-3" style="visibility:hidden;">Select Category </label> <button class="btn btn-danger" style="width: 100%;">Search</button> </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="blog__section section--padding pt-0 p-4">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6 p-7 bg__secondary">
+                <h2 class="text-white mb-3 mt-4">Locate Black Denim Store</h2>
+                <p class="m-0" style="color: #dadada!important;">Find a black denim store near you</p>
+                <div class="row">
+                    <div class="col-md-6"> <select name="" id="" class="form-control select2">
+                            <option selected disabled>Select state</option>
+                            <option value="Telangana">Telangana</option>
+                            <option value="Telangana">Andhra</option>
+                            <option value="Telangana">Maharashtra</option>
+                            <option value="Telangana">Tamilnadu</option>
+                        </select> </div>
+                    <div class="col-md-6"> <select name="" id="" class="form-control select2">
+                            <option selected disabled>Select City</option>
+                            <option value="Telangana">Hyderabad</option>
+                            <option value="Telangana">Warangal</option>
+                            <option value="Telangana">Nalgonda</option>
+                            <option value="Telangana">Adilabad</option>
+                        </select> </div>
+                    <div class="col-md-6 ml-auto"> <button class="btn btn-light w-100">Locate Nearby Stores <i class="fa fa-map-marker" aria-hidden="true" style="margin-left:5px;"></i></button> </div>
+                </div>
+            </div>
+            <div class="col-md-6 p-0"> <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3807.097497311948!2d78.44929931529887!3d17.407108106816832!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcb973f69d9a071%3A0x607c244d5294bc12!2sBlack%20Leaf%20Brand%20Fashion%20For%20Men%2Cs!5e0!3m2!1sen!2sin!4v1663762577216!5m2!1sen!2sin" width="100%" height="350" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe> </div>
+        </div>
+    </div>
+</section>

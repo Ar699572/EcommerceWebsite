@@ -1,0 +1,574 @@
+<main class="main__content_wrapper">
+
+    <section class="product__details--section section--padding">
+        <div class="container">
+            <div class="row row-cols-lg-2 row-cols-md-2">
+               
+                <div class="col" style="z-index: 1;">
+                    <div class="heart" (click)="AddWishlist()" *ngIf="loginUserDetails.UserID!='0'" >           
+                        <i class="fa fa-heart-o" (click)="AddWishlist()" aria-hidden="true" style="padding: 8px;font-size: 25px;float: right;"></i>
+                </div>
+
+               
+
+                    <div class="gallery-wrapper">
+      
+                        <ngx-gallery [options]="galleryOptions" [images]="galleryImages"  (previewChange)="click($event)" class="ngx-gallery" ></ngx-gallery>
+                        <!--   (previewOpen)="previewopen()" (previewClose)="previewclose()"-->
+                      </div>
+                     
+ 
+                </div>
+                <div class="col">
+                    <div class="product__details--info">
+                            <p class="m-0" style="font-size: 20px; font-weight: bold; text-transform: capitalize;">{{lstCurrentDet.BrandName}} 
+                                <a href="javascript:void(0);"  style="float:right;">
+                                    <div class="dropdown" style="max-width: fit-content;padding: 3rem">
+                                        <button class="btnshare"><i class="fa fa-share-alt dropdown-toggle"
+                                                aria-hidden="true"></i> Share</button>
+                                        <div class="dropdown-content">
+                                            <ul class="mt-2">
+                                                <li (click)="share('Facebook')"><a  class="facebook"><i class="fa fa-facebook"></i>&nbsp;&nbsp;FaceBook</a></li>
+                                                <li (click)="share('Twitter')"><a  class="twitter"><i class="fa fa-twitter"></i>&nbsp;&nbsp;Twitter</a></li>
+                                                <li (click)="share('Whatsapp')"><a  class="whatsapp"><i class="fa fa-whatsapp"></i>&nbsp;&nbsp;whatsapp</a></li>
+                                                <li (click)="share('Instagram')"><a  class="instagram"><i class="fa fa-instagram">&nbsp;&nbsp;Instagram</i></a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </a>
+
+                            </p>
+
+                            <h2 class="product__details--info__title mb-15">{{lstCurrentDet.ProductName}}</h2>
+                            <p class="product__details--info__title mb-15 text"
+                                *ngIf="lstCurrentDet.Available=='out of stock' || lstCurrentDet.Availableqty==0">This Product is <b class="eroor">out of
+                                    stock!..</b></p>
+                            <div class="product__details--info__price mb-10">
+                                <span class="current__price"
+                                    *ngIf="lstCurrentDet.SalesPrice!=''">{{getcurrency()+lstCurrentDet.SalesPrice}}</span>
+                                <span class="price__divided"
+                                    *ngIf="lstCurrentDet.Price!='' && ((+lstCurrentDet.SalesPrice)<(+lstCurrentDet.Price))"></span>
+                                <span class="old__price"
+                                    *ngIf="lstCurrentDet.Price!='' && ((+lstCurrentDet.SalesPrice)<(+lstCurrentDet.Price))">{{getcurrency()+lstCurrentDet.Price}}</span>
+                            </div>
+                            <div class="product__details--info__rating d-flex align-items-center mb-15">
+
+
+
+
+                                <div *ngIf="lstCurrentDet.ProductRating>0" class="rating">
+                                    <input type="radio" id="star5" name="rating" value="5" [attr.checked]="(lstCurrentDet.ProductRating==5 ? 'checked' : null    )" disabled/><label for="star5"></label>
+                                    <input type="radio" id="star4" name="rating" value="4" [attr.checked]="(lstCurrentDet.ProductRating==4 ? 'checked' : null    )" disabled/><label for="star4"></label>
+                                    <input type="radio" id="star3" name="rating" value="3" [attr.checked]="(lstCurrentDet.ProductRating==3 ? 'checked' : null    )"  disabled/><label for="star3"></label>
+                                    <input type="radio" id="star2" name="rating" value="2" [attr.checked]="(lstCurrentDet.ProductRating==2 ? 'checked' : null    )"  disabled/><label for="star2"></label>
+                                    <input type="radio" id="star1" name="rating" value="1" [attr.checked]="(lstCurrentDet.ProductRating==1 ? 'checked' : null    )" disabled/><label for="star1"></label>
+                                </div>
+
+                                <!-- <span class="product__items--rating__count--number">(24)</span> -->
+                            </div>
+
+                           
+                            <div class="product__variant">
+                                <div class="product__variant--list mb-10" *ngIf="(lstCurrentDet.OPGName1!='')">
+                                    <fieldset class="variant__input--fieldset"
+                                        *ngIf="(lstCurrentDet.OPGName1=='Color' ||  lstCurrentDet.OPGName1=='color' ||  lstCurrentDet.OPGName1=='COLOR')">
+                                        <legend class="product__variant--title mb-8">{{lstCurrentDet.OPGName1}} :  
+                                            <ng-container *ngFor="let OptionItem of  lstCurrentDet['lst1Options']| UniqueOptions;let ind=index" >
+                                                <span  style="width: 40px;" *ngIf="OptionItem.Image!='0'">
+                                           
+                                                <input [id]="'color-'+ind" name="color" type="radio"  
+                                                    [attr.checked]="(SelectedOption1== OptionItem.OptionName ? 'checked' : null    )"
+                                                    (click)="OptionsChange($event,OptionItem.OptionName,1);">
+                                                    
+                                                <label class="variant__color--value red" [for]="'color-'+ind"   *ngIf="OptionItem.Image!='0'"
+                                                    title={{OptionItem.OptionName}}  style="width: 35px;height: 35px;">
+                                                    <img class="variant__color--value__img"
+                                                        src={{ImagePath+OptionItem.Image}} 
+                                                        style="width: 29px;height: 29px;">
+                                                   
+                                                </label>
+                                            </span>
+                                            </ng-container>
+                                          
+                                        </legend>
+
+                                       
+
+
+
+
+
+
+
+                                    </fieldset>
+
+
+                                    <!-- ||  lstCurrentDet.OPGName1=='color' ||  lstCurrentDet.OPGName1=='COLOR' -->
+                                    <fieldset class="variant__input--fieldset weight"
+                                        *ngIf="!(lstCurrentDet.OPGName1=='Color' || lstCurrentDet.OPGName1=='color' || lstCurrentDet.OPGName1=='COLOR' )">
+                                        <div class="row">
+                                            <div class="col-md-8 col-12">
+                                                <legend class="product__variant--title mb-8">
+                                                    {{lstCurrentDet.OPGName1}}</legend>
+                                                <span
+                                                    *ngFor="let OptionItem of  lstCurrentDet['lst1Options']| UniqueOptions;let ind=index">
+                                                    <input [id]="'lstCurrentDet.OPGName1_'+ind"
+                                                        [name]="'lstCurrentDet.OPGName1_'+ind" type="radio"
+                                                        [attr.checked]="(SelectedOption1== OptionItem.OptionName ? 'checked' : null    )"
+                                                        (click)="OptionsChange($event,OptionItem.OptionName,1);">
+                                                    <label class="variant__size--value red"
+                                                        [for]="'lstCurrentDet.OPGName1_'+ind" style="display: inline;padding: 4px;">{{OptionItem.OptionName}}</label>
+                                                </span>
+
+
+                                            </div>
+
+                                            <div class="col-md-4 col-12"
+                                                *ngIf="(lstCurrentDet.OPGName1=='Size' ||  lstCurrentDet.OPGName1=='size' ||  lstCurrentDet.OPGName1=='SIZE')">
+                                                <a href="#popup1" *ngIf="lstCurrentDet.ProductCartDesc!=''"
+                                                    (click)="sizeView(lstCurrentDet.ProductCartDesc)"><img
+                                                        src="assets/img/size-icon.png" alt=""> Size Chart</a>
+
+
+
+                                            </div>
+                                        </div>
+
+
+                                    </fieldset>
+                                   
+                                </div>
+
+
+
+
+
+
+
+                                <div class="product__variant--list mb-10" *ngIf="(lstCurrentDet.OPGName2!='')">
+                                    <fieldset class="variant__input--fieldset"
+                                        *ngIf="(lstCurrentDet.OPGName2=='Color' ||  lstCurrentDet.OPGName2=='color' ||  lstCurrentDet.OPGName2=='COLOR')">
+                                        
+                                        <legend class="product__variant--title mb-8">{{lstCurrentDet.OPGName2}}:
+                                            <ng-container *ngFor="let OptionItem of  lstCurrentDet['lst2Options']| UniqueOptions;let ind=index" >
+                                            <span style="width: 40px;">
+                                            <input [id]="'color-'+ind" name="color" type="radio"
+                                                value="OptionItem.OptionName"
+                                                [attr.checked]="(SelectedOption2== OptionItem.OptionName ? 'checked' : null    )"
+                                                (click)="OptionsChange($event,OptionItem.OptionName,2);">
+                                            <label class="variant__color--value red" [for]="'color-'+ind"
+                                                title={{OptionItem.OptionName}} style="width: 35px;height: 35px;"> 
+                                                <img class="variant__color--value__img"
+                                                    src={{ImagePath+OptionItem.Image}}  style="width: 29px;height: 29px;">
+                                            </label>
+                                            <!-- [attr.checked]="(SelectedOption2== OptionItem.OptionName ? 'checked' : null    )" -->
+                                        </span>
+                                    </ng-container>
+                                        </legend>
+                                    
+                                       
+
+
+
+
+
+
+
+                                    </fieldset>
+
+
+                                    <!-- Sizes binding -->
+                                    <fieldset class="variant__input--fieldset weight"
+                                        *ngIf="( lstCurrentDet.OPGName2=='Size' || lstCurrentDet.OPGName2=='size' || lstCurrentDet.OPGName2=='SIZE' )">
+                                        <div class="row">
+                                            <div class="col-md-8 col-12">
+                                                <legend class="product__variant--title mb-8">
+                                                    {{lstCurrentDet.OPGName2}} : 
+                                                    <span
+                                                    *ngFor="let OptionItem of  lstCurrentDet['lst2Options']| UniqueOptions;let ind=index" style="width: 47px;">
+
+                                                    <input [id]="'lstCurrentDet.OPGName2_'+ind"
+                                                        [name]="'lstCurrentDet.OPGName2_'+0" type="radio"
+                                                        [attr.checked]="(SelectedOption2== OptionItem.OptionName ? 'checked' : null    )"
+                                                        title="{{'lstCurrentDet.OPGName2_'+ind}}"
+                                                        (click)="OptionsChange($event,OptionItem.OptionName,2);">
+                                                    <label class="variant__size--value red"
+                                                        [for]="'lstCurrentDet.OPGName2_'+ind" style="padding: 2px;height: 34px; width: 35px;border-radius: 50%;">{{OptionItem.OptionName}}</label>
+                                                </span></legend>
+                                                
+
+
+                                            </div>
+                                            <div class="col-md-4 col-12"
+                                                *ngIf="(lstCurrentDet.OPGName2=='Size' ||  lstCurrentDet.OPGName2=='size' ||  lstCurrentDet.OPGName2=='SIZE')">
+                                                <a href="#popup1" *ngIf="lstCurrentDet.ProductCartDesc!=''"
+                                                    (click)="sizeView(lstCurrentDet.ProductCartDesc)"><img
+                                                        src="assets/img/size-icon.png" alt=""> Size Chart</a>
+                                            </div>
+                                        </div>
+
+
+                                    </fieldset>
+
+                                 
+                                </div>
+
+                               
+
+
+                                <div class="product__variant--list mb-10" *ngIf="(lstCurrentDet.OPGName3!='')">
+                                    <fieldset class="variant__input--fieldset" *ngIf="(lstCurrentDet.OPGName3=='Color' ||  lstCurrentDet.OPGName3=='color' ||  lstCurrentDet.OPGName3=='COLOR')">
+                                        
+                                        <legend class="product__variant--title mb-8">{{lstCurrentDet.OPGName3}} :
+                                        
+                                            <span
+                                            *ngFor="let OptionItem of  lstCurrentDet['lst3Options']| UniqueOptions;let ind=index">
+                                            <input [id]="'color-'+ind" name="color" type="radio"
+                                                [attr.checked]="(SelectedOption3== OptionItem.OptionName ? 'checked' : null    )"
+                                                (click)="OptionsChange($event,OptionItem.OptionName,3);">
+                                            <label class="variant__color--value red" [for]="'color-'+ind"
+                                                title={{OptionItem.OptionName}}>
+                                                <img class="variant__color--value__img"
+                                                    src={{ImagePath+OptionItem.Image}}  style="width: 19px;
+                                                height: 19px;"></label>
+
+                                        </span>
+                                        </legend>
+
+                                     
+                                    </fieldset>
+                                    <fieldset class="variant__input--fieldset" *ngIf="( lstCurrentDet.OPGName3=='Size' || lstCurrentDet.OPGName3=='size' || lstCurrentDet.OPGName3=='SIZE' )">
+                                        
+                                        <legend class="product__variant--title mb-8">  {{lstCurrentDet.OPGName3}}  :
+                                            <span *ngFor="let OptionItem of  lstCurrentDet['lst3Options']| UniqueOptions;let ind=index" style="width: 47px;">
+                                            <input [id]="'lstCurrentDet.OPGName3'+ind"
+                                                [name]="'lstCurrentDet.OPGName3'+0" type="radio"
+                                                [attr.checked]="(SelectedOption3== OptionItem.OptionName ? 'checked' : null    )"
+                                                title="{{'lstCurrentDet.OPGName3'+ind}}"
+                                                (click)="OptionsChange($event,OptionItem.OptionName,3);">
+                                            <label class="variant__size--value red"
+                                                [for]="'lstCurrentDet.OPGName3'+ind" style="padding: 2px;height: 34px; width: 35px;border-radius: 50%;">{{OptionItem.OptionName}}</label>
+                                        </span>
+                                        </legend>
+
+                                      
+                                    </fieldset>
+
+                                    <fieldset class="variant__input--fieldset weight"
+                                   
+                                        *ngIf="!(lstCurrentDet.OPGName3=='Color'|| lstCurrentDet.OPGName3=='color' || lstCurrentDet.OPGName3=='size' || lstCurrentDet.OPGName3=='Size' ||lstCurrentDet.OPGName3=='size' )">
+                                        <div class="row">
+                                            <div class="col-md-8 col-12">
+                                                <legend class="product__variant--title mb-8">
+                                                    {{lstCurrentDet.OPGName3}} :
+                                                    <ng-container *ngFor="let OptionItem of  lstCurrentDet['lst3Options']| UniqueOptions; let ind=index">
+                                                    <span  style="width:auto;margin: 0px 5px 5px 0px;">
+                                                    
+                                                    <input [id]="'lstCurrentDet.OPGName3_'+ind"
+                                                        [name]="'lstCurrentDet.OPGName3_0'" type="radio"
+                                                        [attr.checked]="(SelectedOption3==OptionItem.OptionName ? 'checked' : null)"
+                                                        (click)="OptionsChange($event,OptionItem.OptionName,3);" >
+                                                    <label class="variant__size--value red"
+                                                        [for]="'lstCurrentDet.OPGName3_'+ind" style="padding: 2px;height: 34px;width: auto;">{{OptionItem.OptionName}}</label>    
+                                                </span>
+                                            </ng-container>
+                                            </legend>
+                                               
+
+
+                                            </div>
+                                            <div class="col-md-4 col-12"
+                                                *ngIf="(lstCurrentDet.OPGName3=='Size' ||  lstCurrentDet.OPGName3=='size' ||  lstCurrentDet.OPGName3=='SIZE')">
+                                                <a href="#popup1" *ngIf="lstCurrentDet.ProductCartDesc!=''"
+                                                    (click)="sizeView(lstCurrentDet.ProductCartDesc)"><img
+                                                        src="assets/img/size-icon.png" alt=""> Size Chart</a>
+                                            </div>
+                                        </div>
+
+
+                                    </fieldset>
+                                </div>
+
+
+
+                                <div class="product__variant--list mb-10" *ngIf="(lstCurrentDet.OPGName4!='')">
+                                    <fieldset class="variant__input--fieldset"
+                                        *ngIf="(lstCurrentDet.OPGName4=='Color' ||  lstCurrentDet.OPGName4=='color' ||  lstCurrentDet.OPGName4=='COLOR')">
+                                        <legend class="product__variant--title mb-8">{{lstCurrentDet.OPGName4}} :
+                                        </legend>
+
+                                        <span
+                                            *ngFor="let OptionItem of  lstCurrentDet['lst4Options']| UniqueOptions;let ind=index">
+                                            <input [id]="'color-'+ind" name="color" type="radio"
+                                                [attr.checked]="(SelectedOption4== OptionItem.OptionName ? 'checked' : null    )"
+                                                (click)="OptionsChange($event,OptionItem.OptionName,4);">
+                                            <label class="variant__color--value red" [for]="'color-'+ind"
+                                                title={{OptionItem.OptionName}}>
+                                                <img class="variant__color--value__img"
+                                                    src={{ImagePath+OptionItem.Image}}  style="width: 19px;
+                                                height: 19px;
+                                            ">
+                                            </label>
+                                        </span>
+
+                                    </fieldset>
+
+
+
+                                    <fieldset class="variant__input--fieldset weight"
+                                        *ngIf="!(lstCurrentDet.OPGName4=='Color' ||  lstCurrentDet.OPGName4=='color' ||  lstCurrentDet.OPGName4=='COLOR')">
+                                        <div class="row">
+                                            <div class="col-md-8 col-12">
+                                                <legend class="product__variant--title mb-8">
+                                                    {{lstCurrentDet.OPGName4}}</legend>
+                                                <span
+                                                    *ngFor="let OptionItem of  lstCurrentDet['lst4Options']| UniqueOptions;let ind=index">
+                                                    <input [id]="'lstCurrentDet.OPGName4_'+ind"
+                                                        [name]="'lstCurrentDet.OPGName4_'+ind" type="radio"
+                                                        [attr.checked]="(SelectedOption4== OptionItem.OptionName ? 'checked' : null )"
+                                                        (click)="OptionsChange($event,OptionItem.OptionName,4);">
+                                                    <label class="variant__size--value red"
+                                                        [for]="'lstCurrentDet.OPGName4_'+ind" style="display: inline;padding: 4px;">{{OptionItem.OptionName}}</label>
+                                                </span>
+
+
+                                            </div>
+                                            <div class="col-md-4 col-12"
+                                                *ngIf="(lstCurrentDet.OPGName4=='Size' ||  lstCurrentDet.OPGName4=='size' ||  lstCurrentDet.OPGName4=='SIZE')">
+                                                <a href="#popup1" *ngIf="lstCurrentDet.ProductCartDesc!=''"
+                                                    (click)="sizeView(lstCurrentDet.ProductCartDesc)"><img
+                                                        src="assets/img/size-icon.png" alt=""> Size Chart</a>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </div>
+
+                                <div class="product__variant--list mb-10 " *ngIf="(lstCurrentDet.ProductShortDesc!='')">
+                                    <fieldset class="variant__input--fieldset weight">
+                                        <div class="row">
+                                            <div class="col-md-8 col-12">
+                                                <legend class="product__variant--title mb-8"> Description </legend>
+                                                <p class="description">{{lstCurrentDet.ProductShortDesc}} </p>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                            
+                                <div class="product__variant--list mb-15">
+
+                                
+                                    <div class="row" *ngIf="GetPurchaseQty(lstCurrentDet)<=lstCurrentDet.Availableqty || GetPurchaseQty(lstCurrentDet)=='' || lstCurrentDet.Availableqty==(GetPurchaseQty(lstCurrentDet))">
+                                        <div class="col-6 col-md-6 mb-3"><button (click)="AddtoCartClick(1,'cart')"
+                                                *ngIf="lstCurrentDet.Available!='out of stock'"
+                                                class="variant__buy--now__btn primary__btn outline" type="submit" ><a>Add To Cart </a></button></div>
+                                        <div class="col-6  col-md-6 mb-3"><button (click)="BuyNowProduct()"
+                                                *ngIf="lstCurrentDet.Available!='out of stock'"
+                                                class="variant__buy--now__btn primary__btn" type="submit"><a>Buy
+                                                    now</a></button></div>
+                                        
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-7 mb-1">
+                                            <h4 for="" class="mb-3">Delivery options</h4>
+                                            <div class="input-group mb-3">
+                                                <input type="text" name="deliveryZipCode" id="deliveryZipCode"
+                                                    class="form-control" placeholder="Enter pincode" autocomplete="off"
+                                                    aria-label="Recipient's username" aria-describedby="basic-addon2">
+                                                <div class="input-group-append" style="cursor:pointer;">
+                                                    <span class="input-group-text" id="basic-addon2"><a
+                                                            (click)="checkDeliveryAvailability(lstCurrentDet.SalesPrice)">Check</a></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 mb-2" *ngIf="DeliveryCharges==-1">
+                                            <label *ngIf="DeliveryError!=''" style="color:red;font-size: 13px">Delivery not possible at given pincode</label>
+                                        </div>
+                                        <div class="col-md-12 mb-2" *ngIf="ExpectedDeliveryDays==''">
+                                            <label for=""><i class="fa fa-calendar" style="margin-right:5px;"
+                                                    aria-hidden="true"></i> Enter Pincode for Delivery Date</label>
+                                        </div>
+                                        
+                                     
+                                        <div class="col-md-12 mb-2" *ngIf="ExpectedDeliveryDays!=''">
+                                            <label for=""><i class="fa fa-calendar" style="margin-right:5px;"
+                                                    aria-hidden="true"></i> Expected Delivery Date
+                                                {{ExpectedDeliveryDays}}</label>
+                                        </div>
+
+                                        <div class="col-md-12 mb-2" *ngIf="showDeliveryStatusmsg">
+                                            <label for=""><i class="fa fa-truck" style="margin-right:5px;"
+                                                    aria-hidden="true"></i>{{DeliveryCharges==0?'FREE
+                                                shipping':('Shipping Charges:'+(getcurrency()+DeliveryCharges ))}}
+                                                <span *ngIf="DeliveryCharges==0"
+                                                    style="text-decoration:line-through; color:red;">{{(getcurrency()+mDeliveryCharges)}}</span>
+                                            </label>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <label for=""><i class="fa fa-reply" style="margin-right:5px;"
+                                                    aria-hidden="true"></i><a href="#returns"
+                                                    style="text-decoration: underline;">View Return Policy</a></label>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mt-5">
+                                        <h4 for="" class="mb-3">Product Details</h4>
+                                        <div class="col-md-12 mb-5">
+                                            <p>{{lstCurrentDet.ProductLongDesc}}</p>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <!-- <h4 class="layout__flex--item product-desc-title">Code:</h4> -->
+                                            <p class="p-0" style="font-weight: 600;">Code : {{lstCurrentDet.ProductCode}}</p>
+                                        </div>
+
+                                         <div class="col-md-6 mb-3" *ngIf="lstCurrentDet.OPGName1!=''">
+                                           
+                                            <p class="p-0" style="font-weight: 600;">{{lstCurrentDet.OPGName1}} : {{SelectedOption1}}</p>
+                                        </div>
+
+                                        <div class="col-md-6 mb-3" *ngIf="lstCurrentDet.OPGName2!=''">
+                                            
+                                            <p class="p-0" style="font-weight: 600;">{{lstCurrentDet.OPGName2}} : {{SelectedOption2}}</p>
+                                        </div> 
+
+                                        <div class="col-md-6 mb-3" *ngIf="lstCurrentDet.OPGName3!=''">
+                                          
+                                            <p class="p-0" style="font-weight: 600;">{{lstCurrentDet.OPGName3}} : {{SelectedOption3}}</p>
+                                        </div>
+
+
+                                        <div class="col-md-6 mb-3" *ngIf="lstCurrentDet.OPGName4!=''">
+                                           
+                                            <p class="p-0" style="font-weight: 600;">{{lstCurrentDet.OPGName3}} : {{SelectedOption4}}</p>
+                                        </div>
+
+
+
+
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+
+                       
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+     <section class="shop__section section--padding"> 
+        <div class="container-fluid p-5">
+
+            <div class="row">
+                <div class="col-xl-9 col-lg-9 mx-auto">
+                  <h2 class="product__details--info__title mb-15 text-center">You May Also Like</h2>
+                </div>
+
+                <div class="col-xl-9 col-lg-9 mx-auto">
+                    <div class="shop__product--wrapper">
+                        <div class="tab_content">
+                            <div id="product_grid" class="tab_pane active show">
+                                <div class="product__section--inner product__grid--inner">
+                                    <div class="row row-cols-xl-5 row-cols-lg-5 row-cols-md-3 row-cols-2 mb--n30">
+
+                                        <div class="col mb-30" style="display:table-cell;"
+                                            (mouseover)="hover=true;productMouseOverCall(d.ProductID)"
+                                            (mouseleave)="hover=false" *ngFor="let d of getRelatedProducts();let i=index">
+                                            <div class="product__items user-profile" *ngIf="d.ProductImage!=''">
+                                                <div class="product__items--thumbnail figure">
+                                                    <a class="product__items--link"
+                                                        (click)="ProductClick(d.ProductOptionID,d.ProductID,d.ProductImage)">
+                                                        <img class="product__items--img product__primary--img"
+                                                            src={{ImagePath}}{{d.ProductImage}} alt="product-img">
+                                                        <img class="product__items--img product__secondary--img"
+                                                            src={{ImagePath}}{{d.ProductImage}} alt="product-img">
+                                                    </a>
+                                                </div>
+                                                <div class="css-popover bg__black  d-none d-lg-block "
+                                                    [style.z-index]="hover==true  ? 9 : 0">
+                                                    <div class="row">
+                                                        <div class="col-md-12 mb-4">
+                                                            <p class="product-desc text-white">
+                                                                {{d.ProductShortDesc==''?d.ProductName:d.ProductShortDesc}}</p>
+                                                        </div>
+                                                        <!-- <div class="col-md-5">
+                                                            <strong class="text-white">Online Size :</strong>
+                                                        </div> -->
+                                                        <span *ngFor="let o of selectedProductOptions">
+                                                           
+                                                            <div class="col-md-12">
+                                                                <ul class="text-white">
+                                                                    <li><strong class="text-white">{{o.Name}}</strong>:
+                                                                        {{o.Options}}</li>
+
+                                                                </ul>
+                                                            </div>
+                                                        </span>
+                                                        <div class="col-md-12 mt-4">
+                                                            <h4 class="text-white"><a
+                                                                    (click)="ProductClick(d.ProductOptionID,d.ProductID,d.ProductImage)">QUICK
+                                                                    VIEW</a></h4>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="product__items--content text-center">
+                                                    
+                                                    <h3 class="product__items--content__title h4"><a
+                                                            href="#">{{d.ProductName}}</a>
+                                                            
+                                                            <!-- <div  class="rating">
+                                                                <input type="radio"  name="'rating'+{{i}}" value="5" [attr.checked]="(d.ProductRating==5 ? 'checked' : null  )" disabled/><label for="star5"></label>
+                                                                <input type="radio"  name="'rating'+{{i}}" value="4" [attr.checked]="(d.ProductRating==4 ? 'checked' : null    )" disabled/><label for="star4"></label>
+                                                                <input type="radio"  name="'rating'+{{i}}" value="3" [attr.checked]="(d.ProductRating==3 ? 'checked' : null    )"  disabled/><label for="star3"></label>
+                                                                <input type="radio"  name="'rating'+{{i}}" value="2" [attr.checked]="(d.ProductRating==2 ? 'checked' : null    )"  disabled/><label for="star2"></label>
+                                                                <input type="radio"  name="'rating'+{{i}}" value="1" [attr.checked]="(d.ProductRating==1 ? 'checked' : null    )" disabled/><label for="star1"></label>
+                                                            </div> -->
+                                                        </h3>
+                                                        
+                                                    <div class="product__items--price">
+                                                        <span class="current__price"
+                                                            *ngIf="d.SalesPrice!=''">{{getcurrency()+d.SalesPrice }}</span>
+                                                        <span class="price__divided"
+                                                            *ngIf="d.Price!='' && ((+d.SalesPrice)<(+d.Price))"></span>
+                                                        <span class="old__price"
+                                                            *ngIf="d.Price!='' && ((+d.SalesPrice)<(+d.Price))">{{getcurrency()+d.Price
+                                                            }}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+
+
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div> 
+       
+        <div id="popup1" class="overlay" [ngStyle]="{'display':sizepopdisplay}">
+            <div class="popup">
+                <h3 style="font-family: auto ! important;">Size chart Description</h3>
+
+                <a class="close" (click)="closeLoginModal()">&times;</a>
+                <div class="content">
+
+                    {{SizeChartDescription}}
+
+                </div>
+            </div>
+        </div>
+        
+
+    </section> 
+</main>
